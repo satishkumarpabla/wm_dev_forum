@@ -31,23 +31,39 @@ defmodule WmDevForumWeb.PageController do
     end
   end
 
+  defp get_all_users(conn) do
+    users = UserManagement.get_all_users()
+
+    render(conn, "admin-dashboard.html", users: users)
+    # render(conn, "index.html")
+  end
+
+  def question(conn, _param) do
+    render(conn, "add-question.html")
+  end
+
+  def add_question(conn, params) do
+    question_text = params |> Map.get("question_text")
+    IO.inspect(question_text, label: "===>: ")
+    render(conn, "dashboard.html")
+  end
+
   def login_user(conn, params) do
     entered_user_name = params |> Map.get("user_name")
     entered_password = params |> Map.get("password")
 
-    if entered_user_name == "admin" && entered_password == "admin" do
-      render(conn, "admin-dashboard.html")
-    else
-      is_user_authentic = UserManagement.login_user(entered_user_name, entered_password)
-      IO.inspect(is_user_authentic, label: "XXXXXXXXXXXXXXXXXXXXXx")
+    user = UserManagement.login_user(entered_user_name, entered_password)
 
-      if is_user_authentic do
+    case user do
+      nil ->
         render(conn, "error-page.html")
-      else
-        render(conn, "dashboard.html")
-      end
 
-      IO.inspect([entered_user_name, entered_password], label: "22222222222222222")
+      user ->
+        if user.is_admin do
+          get_all_users(conn)
+        else
+          render(conn, "dashboard.html")
+        end
     end
   end
 end
