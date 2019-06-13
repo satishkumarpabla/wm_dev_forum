@@ -19,4 +19,12 @@ defmodule WmDevForumWeb.PageController do
 
     render(conn, "register.html")
   end
+
+  def login_user(conn, params) do
+    entered_user_name = params |> Map.get("user_name")
+    entered_password = params |> Map.get("password")
+
+    IO.inspect([entered_user_name, entered_password], label: "22222222222222222")
+    render(conn, "dashboard.html")
+  end
 end
