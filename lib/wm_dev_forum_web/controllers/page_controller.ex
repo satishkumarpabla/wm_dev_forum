@@ -23,4 +23,24 @@ defmodule WmDevForumWeb.PageController do
         |> redirect(to: page_path(conn, :register))
     end
   end
+
+  def login_user(conn, params) do
+    entered_user_name = params |> Map.get("user_name")
+    entered_password = params |> Map.get("password")
+
+    if entered_user_name == "admin" && entered_password == "admin" do
+      render(conn, "admin-dashboard.html")
+    else
+      is_user_authentic = UserManagement.login_user(entered_user_name, entered_password)
+      IO.inspect(is_user_authentic, label: "XXXXXXXXXXXXXXXXXXXXXx")
+
+      if is_user_authentic do
+        render(conn, "error-page.html")
+      else
+        render(conn, "dashboard.html")
+      end
+
+      IO.inspect([entered_user_name, entered_password], label: "22222222222222222")
+    end
+  end
 end
