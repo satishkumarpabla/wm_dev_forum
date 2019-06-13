@@ -11,32 +11,42 @@ defmodule WmDevForumWeb.PageController do
   end
 
   def create_user(conn, params) do
-    _user = UserManagement.create_user(params)
+    case UserManagement.create_user(params) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, gettext("You have been registered!!!!"))
+        |> redirect(to: page_path(conn, :register))
 
-    conn =
-      conn
-      |> put_flash(:info, "You have been registered!!!!")
+      _ ->
+        conn
+        |> put_flash(:error, gettext("Could not register!"))
+        |> redirect(to: page_path(conn, :register))
+    end
+  end
 
-    render(conn, "register.html")
+  defp get_all_users(conn) do
+    users = UserManagement.get_all_users()
+
+    render(conn, "admin-dashboard.html", users: users)
+    # render(conn, "index.html")
   end
 
   def login_user(conn, params) do
     entered_user_name = params |> Map.get("user_name")
     entered_password = params |> Map.get("password")
 
-    if entered_user_name == "admin" && entered_password == "admin" do
-      render(conn, "admin-dashboard.html")
-    else
-      is_user_authentic = UserManagement.login_user(entered_user_name, entered_password)
-      IO.inspect(is_user_authentic, label: "XXXXXXXXXXXXXXXXXXXXXx")
+    user = UserManagement.login_user(entered_user_name, entered_password)
 
-      if is_user_authentic do
+    case user do
+      nil ->
         render(conn, "error-page.html")
-      else
-        render(conn, "dashboard.html")
-      end
 
-      IO.inspect([entered_user_name, entered_password], label: "22222222222222222")
+      user ->
+        if user.is_admin do
+          get_all_users(conn)
+        else
+          render(conn, "dashboard.html")
+        end
     end
   end
 end

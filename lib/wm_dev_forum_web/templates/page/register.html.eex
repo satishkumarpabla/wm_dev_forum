@@ -1,27 +1,39 @@
 <div class="jumbotron">
   <h2><%= gettext "Register for %{name}!", name: "Watermark Dev Forum" %></h2>
   <div>
-    <%= form_for @conn, page_path(@conn, :create_user), [id: :signupform], fn _f-> %>
-      <label>First Name:</label>
-      <input type="text" name="first_name"> </input>
+    <%= form_for @conn, page_path(@conn, :create_user), [id: :signupform], fn f-> %>
+
+      <%= label f, :first_name, gettext("First Name:"), class: "" %>
+      <%= text_input f, :first_name, class: "", placeholder: gettext("First Name"), required: true %>
+      <%= error_tag f, :first_name %>
+
+
       <br/>
 
-      <label>Last Name:</label>
-      <input type="text" name="last_name"> </input>
+      <%= label f, :last_name, gettext("Last Name:"), class: "" %>
+      <%= text_input f, :last_name, class: "", placeholder: gettext("Last Name"), required: true %>
+        <%= error_tag f, :last_name %>
       <br/>
 
-      <label>Email:</label>
-      <input type="text" name="email"> </input>
+      <%= label f, :email, gettext("Email:"), class: "" %>
+      <%= text_input f, :email, class: "", placeholder: gettext("Email"), required: true %>
+      <%= error_tag f, :email %>
+
       <br/>
 
-      <label>password:</label>
-      <input type="password" name="password"> </input>
+      <%= label f, :password, gettext("Password:"), class: "" %>
+      <%= password_input f, :password, class: "", placeholder: gettext("Password"), required: true %>
+      <%= error_tag f, :password %>
+
       <br/>
 
-      <label>Confirm password:</label>
-      <input type="password" name="confirm_password"> </input>
+      <%= label f, :confirm_password, gettext("Confirm Password:"), class: "" %>
+      <%= password_input f, :confirm_password, class: "", placeholder: gettext("Confirm Password"), required: true %>
+      <%= error_tag f, :confirm_password %>
+
       <br/>
-      <button type="submit"> <%= gettext("Register") %></input>
+      <%= submit gettext("Register")   %>
+
       <% end %>
   </div>
 </div>

@@ -6,12 +6,10 @@ defmodule WmDevForum.UserManagement do
   end
 
   def login_user(user_name, password) do
-    user_uuid = UserManagementQueries.check_if_user_is_authentic(user_name, password)
+    UserManagementQueries.check_if_user_is_authentic(user_name, password)
+  end
 
-    if user_uuid == "" || user_uuid == nil do
-      False
-    else
-      True
-    end
+  def get_all_users() do
+    UserManagementQueries.get_all_users()
   end
 end

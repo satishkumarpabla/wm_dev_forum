@@ -1,3 +1,10 @@
 <div>
   <p> Admin Account </p>
+  <%=  for key <- @users do %>
+  <div><div> <%= key.first_name %> </div>
+  <div> <%= key.last_name %> </div>
+  <div> <%= key.email %> </div>
+  <div><a> <%= "Approve User" %> </a></div>
+</div>
+  <% end %>
 </div>
