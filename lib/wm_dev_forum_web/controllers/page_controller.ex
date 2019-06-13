@@ -10,8 +10,8 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "register.html")
   end
 
-  def register_user(conn, params) do
-    _user = UserManagement.register_user(params)
+  def create_user(conn, params) do
+    _user = UserManagement.create_user(params)
 
     conn =
       conn
@@ -21,10 +21,9 @@ defmodule WmDevForumWeb.PageController do
   end
 
   def get_all_users(conn, _params) do
-  #users = User.get_all_users()
+    # users = User.get_all_users()
 
-  #render(conn, "users.json", res: %{users: users})
-  render conn, "index.html"
+    # render(conn, "users.json", res: %{users: users})
+    render(conn, "index.html")
   end
-
 end

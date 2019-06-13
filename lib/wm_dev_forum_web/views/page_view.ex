@@ -4,7 +4,6 @@ defmodule WmDevForumWeb.PageView do
   def render("user.json", %{user: user}) do
     %{
       uuid: user.uuid,
-      title: plan.title,
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email
@@ -14,6 +13,4 @@ defmodule WmDevForumWeb.PageView do
   def render("users.json", %{users: users}) do
     render_many(users, WmDevForumWeb.PageView, "user.json")
   end
-
-
 end
