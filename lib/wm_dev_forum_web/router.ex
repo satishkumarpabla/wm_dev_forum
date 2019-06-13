@@ -19,6 +19,8 @@ defmodule WmDevForumWeb.Router do
     get("/registerations/new", PageController, :register)
     post("/registerations/create", PageController, :create_user)
     post("/login_user", PageController, :login_user)
+    post("/add_question", PageController, :add_question)
+    get("/question", PageController, :question)
 
     get("/", PageController, :index)
   end

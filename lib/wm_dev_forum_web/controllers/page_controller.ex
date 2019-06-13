@@ -31,6 +31,16 @@ defmodule WmDevForumWeb.PageController do
     # render(conn, "index.html")
   end
 
+  def question(conn, _param) do
+    render(conn, "add-question.html")
+  end
+
+  def add_question(conn, params) do
+    question_text = params |> Map.get("question_text")
+    IO.inspect(question_text, label: "===>: ")
+    render(conn, "dashboard.html")
+  end
+
   def login_user(conn, params) do
     entered_user_name = params |> Map.get("user_name")
     entered_password = params |> Map.get("password")

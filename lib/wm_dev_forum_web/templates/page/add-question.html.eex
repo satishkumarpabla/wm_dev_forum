@@ -1,0 +1,12 @@
+<div>
+  <p>Add Question</p>
+  <%= form_for @conn, page_path(@conn, :add_question), [id: :signupform], fn _f-> %>
+  <label> Question </label>
+  <textarea id="question_text" name="question_text"></textarea>
+
+
+  <!-- <input type = "textarea" name="question_text"> </input> -->
+  <button type="submit"> <%= gettext("Submit") %></input>
+  <% end %>
+  <br/>
+</div>
