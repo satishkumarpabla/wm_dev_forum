@@ -32,12 +32,14 @@ defmodule WmDevForumWeb.PageController do
   end
 
   def question(conn, _param) do
-    render(conn, "add-question.html")
+    question_tags = UserManagement.getTags()
+    render(conn, "add-question.html", tags: question_tags)
   end
 
   def add_question(conn, params) do
     question_text = params |> Map.get("question_text")
     IO.inspect(question_text, label: "===>: ")
+    UserManagement.post_question(params)
     render(conn, "dashboard.html")
   end
 

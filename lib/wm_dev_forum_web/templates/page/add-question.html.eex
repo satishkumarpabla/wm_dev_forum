@@ -1,10 +1,20 @@
 <div>
   <p>Add Question</p>
-  <%= form_for @conn, page_path(@conn, :add_question), [id: :signupform], fn _f-> %>
-  <label> Question </label>
+  <%= form_for @conn, page_path(@conn, :add_question), [id: :signupform], fn(f)-> %>
+  <div><label> Question </label>
   <textarea id="question_text" name="question_text"></textarea>
+</div>
+<div>
+    <%= label f, :options, "Choose Tags" %>
 
+    <%= for option <- @tags do %>
+        <div><%= label do %>
+            <input type="checkbox" id="tag_value" name="tag_value" f, value=<%= option.uuid %>  >
+            <%= option.title %>
+        <% end %></div>
+    <% end %>
 
+</div>
   <!-- <input type = "textarea" name="question_text"> </input> -->
   <button type="submit"> <%= gettext("Submit") %></input>
   <% end %>
