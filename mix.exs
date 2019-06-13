@@ -20,7 +20,6 @@ defmodule WmDevForum.Mixfile do
   def application do
     [
       mod: {WmDevForum.Application, []},
-      extra_applications: [:logger, :runtime_tools]
     ]
   end
 
@@ -41,7 +40,8 @@ defmodule WmDevForum.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:plug_cowboy, "~> 1.0"}
+      {:plug_cowboy, "~> 1.0"},
+      {:elixir_uuid, "~> 1.2"}
     ]
   end
 
