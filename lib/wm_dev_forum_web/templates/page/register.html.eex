@@ -1,7 +1,7 @@
 <div class="jumbotron">
   <h2><%= gettext "Register for %{name}!", name: "Watermark Dev Forum" %></h2>
   <div>
-    <%= form_for @conn, page_path(@conn, :register), [id: :signupform], fn _f-> %>
+    <%= form_for @conn, page_path(@conn, :create_user), [id: :signupform], fn _f-> %>
       <label>First Name:</label>
       <input type="text" name="first_name"> </input>
       <br/>

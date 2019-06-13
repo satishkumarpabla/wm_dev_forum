@@ -1,5 +1,7 @@
 defmodule WmDevForum.UserManagement do
-  def register_user(params) do
-    IO.inspect(params)
+  alias WmDevForum.UserManagementQueries
+
+  def create_user(params) do
+    UserManagementQueries.create_user(params)
   end
 end

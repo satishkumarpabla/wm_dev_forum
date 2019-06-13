@@ -10,8 +10,8 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "register.html")
   end
 
-  def register_user(conn, params) do
-    _user = UserManagement.register_user(params)
+  def create_user(conn, params) do
+    _user = UserManagement.create_user(params)
 
     conn =
       conn
