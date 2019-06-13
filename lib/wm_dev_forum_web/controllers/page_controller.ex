@@ -17,9 +17,16 @@ defmodule WmDevForumWeb.PageController do
         |> put_flash(:info, gettext("You have been registered!!!!"))
         |> redirect(to: page_path(conn, :register))
 
-      _ ->
+      {:error, changeset} ->
+        errors =
+          changeset.errors
+          |> Enum.map(fn {key, {msg, _}} ->
+            {key, msg}
+          end)
+
         conn
         |> put_flash(:error, gettext("Could not register!"))
+        |> Map.put(:errors, errors)
         |> redirect(to: page_path(conn, :register))
     end
   end
