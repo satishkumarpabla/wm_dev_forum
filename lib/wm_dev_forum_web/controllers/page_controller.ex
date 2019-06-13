@@ -11,12 +11,16 @@ defmodule WmDevForumWeb.PageController do
   end
 
   def create_user(conn, params) do
-    _user = UserManagement.create_user(params)
+    case UserManagement.create_user(params) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, gettext("You have been registered!!!!"))
+        |> redirect(to: page_path(conn, :register))
 
-    conn =
-      conn
-      |> put_flash(:info, "You have been registered!!!!")
-
-    render(conn, "register.html")
+      _ ->
+        conn
+        |> put_flash(:error, gettext("Could not register!"))
+        |> redirect(to: page_path(conn, :register))
+    end
   end
 end
