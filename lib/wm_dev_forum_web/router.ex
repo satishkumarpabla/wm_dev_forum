@@ -15,6 +15,8 @@ defmodule WmDevForumWeb.Router do
 
   scope "/", WmDevForumWeb do
     pipe_through :browser # Use the default browser stack
+    get "/register", PageController, :register
+    post "/register", PageController, :register_user
 
     get "/", PageController, :index
 
