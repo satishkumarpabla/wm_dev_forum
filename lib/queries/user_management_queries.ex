@@ -9,7 +9,7 @@ defmodule WmDevForum.UserManagementQueries do
   end
 
   def post_question(question) do
-    Question.changeset(%{title: question, description: "this is that"})
+    Question.create_changeset(%{title: question, description: "this is that"})
     |> Repo.insert()
   end
 
