@@ -18,10 +18,9 @@ defmodule WmDevForumWeb.Router do
     pipe_through(:browser)
     get("/registerations/new", PageController, :register)
     post("/registerations/create", PageController, :create_user)
+    post("/login_user", PageController, :login_user)
 
     get("/", PageController, :index)
-
-    get("/admin/get_all_users", PageController, :get_all_users)
   end
 
   # Other scopes may use custom stacks.
