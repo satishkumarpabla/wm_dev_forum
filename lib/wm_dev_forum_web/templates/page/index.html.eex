@@ -7,8 +7,7 @@
       <label>password:</label>
       <input type="text" > </input>
       <br/>
-      <input type="button" value= "Login" redirect(to: "http://localhost:4010/")> </input>
-
+      <input type="button" value= "Login" onclick=""> </input>
   </div>
 </div>
 
