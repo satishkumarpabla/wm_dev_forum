@@ -2,7 +2,7 @@
   <h2><%= gettext "Login to %{name}!", name: "Watermark Dev Forum" %></h2>
   <div>
       <%= form_for @conn, page_path(@conn, :login_user), [id: :signupform], fn _f-> %>
-      <label> User Name </label>
+      <label> Email </label>
       <input type = "text" name="user_name"> </input>
       <br/>
 
