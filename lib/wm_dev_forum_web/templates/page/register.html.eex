@@ -2,33 +2,33 @@
   <h2><%= gettext "Register for %{name}!", name: "Watermark Dev Forum" %></h2>
   <div>
     <%= form_for @conn, page_path(@conn, :create_user), [id: :signupform], fn f-> %>
-
+      
       <%= label f, :first_name, gettext("First Name:"), class: "" %>
-      <%= text_input f, :first_name, class: "", placeholder: gettext("First Name"), required: true %>
+      <%= text_input f, :first_name, class: "", placeholder: gettext("First Name")%>
       <%= error_tag f, :first_name %>
 
 
       <br/>
 
       <%= label f, :last_name, gettext("Last Name:"), class: "" %>
-      <%= text_input f, :last_name, class: "", placeholder: gettext("Last Name"), required: true %>
+      <%= text_input f, :last_name, class: "", placeholder: gettext("Last Name")%>
         <%= error_tag f, :last_name %>
       <br/>
 
       <%= label f, :email, gettext("Email:"), class: "" %>
-      <%= text_input f, :email, class: "", placeholder: gettext("Email"), required: true %>
+      <%= email_input f, :email, class: "", placeholder: gettext("Email")%>
       <%= error_tag f, :email %>
 
       <br/>
 
       <%= label f, :password, gettext("Password:"), class: "" %>
-      <%= password_input f, :password, class: "", placeholder: gettext("Password"), required: true %>
+      <%= password_input f, :password, class: "", placeholder: gettext("Password")%>
       <%= error_tag f, :password %>
 
       <br/>
 
       <%= label f, :confirm_password, gettext("Confirm Password:"), class: "" %>
-      <%= password_input f, :confirm_password, class: "", placeholder: gettext("Confirm Password"), required: true %>
+      <%= password_input f, :confirm_password, class: "", placeholder: gettext("Confirm Password")%>
       <%= error_tag f, :confirm_password %>
 
       <br/>

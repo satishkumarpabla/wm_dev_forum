@@ -20,6 +20,7 @@ defmodule WmDevForum.Mixfile do
   def application do
     [
       mod: {WmDevForum.Application, []},
+      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_google]
     ]
   end
 
@@ -41,6 +42,12 @@ defmodule WmDevForum.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:plug_cowboy, "~> 1.0"},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 1.0"},
+      # ueberauth dependency added.
+      {:ueberauth, "~> 0.3"},
+      # google dependency added.
+      {:ueberauth_google, "~> 0.7"},
       {:elixir_uuid, "~> 1.2"}
     ]
   end
