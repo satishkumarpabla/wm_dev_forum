@@ -17,6 +17,8 @@ defmodule WmDevForumWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+
+    get("/admin/get_all_users", PageController, :get_all_users)
   end
 
   # Other scopes may use custom stacks.
