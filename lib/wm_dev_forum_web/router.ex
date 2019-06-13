@@ -13,6 +13,13 @@ defmodule WmDevForumWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  # RanqWeb is app namespace
+  scope "/auth", WmDevForumWeb do
+    pipe_through(:browser)
+    get("/:provider", AuthController, :request)
+    get("/:provider/callback", AuthController, :callback)
+  end
+
   scope "/", WmDevForumWeb do
     # Use the default browser stack
     pipe_through(:browser)

@@ -1,6 +1,7 @@
 defmodule WmDevForumWeb.PageController do
   use WmDevForumWeb, :controller
   alias WmDevForum.UserManagement
+  alias WmDevForum.Schema.User
 
   def index(conn, _params) do
     render(conn, "index.html")
@@ -58,12 +59,14 @@ defmodule WmDevForumWeb.PageController do
       nil ->
         render(conn, "error-page.html")
 
-      user ->
-        if user.is_admin do
-          get_all_users(conn)
-        else
-          render(conn, "dashboard.html")
-        end
+      %User{is_admin: true} ->
+        get_all_users(conn)
+
+      %User{is_admin: false} ->
+        render(conn, "dashboard.html")
+
+      _ ->
+        render(conn, "error-page.html")
     end
   end
 end
