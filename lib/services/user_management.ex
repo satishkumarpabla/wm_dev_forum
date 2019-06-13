@@ -12,4 +12,13 @@ defmodule WmDevForum.UserManagement do
   def get_all_users() do
     UserManagementQueries.get_all_users()
   end
+
+  def getTags() do
+    UserManagementQueries.getTags()
+  end
+
+  def post_question(params) do
+    # question_data = %{}
+    UserManagementQueries.post_question(params |> Map.get("question_text"))
+  end
 end
