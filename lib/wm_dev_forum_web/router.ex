@@ -29,12 +29,22 @@ defmodule WmDevForumWeb.Router do
     pipe_through(:browser)
     pipe_through(:verify)
 
+    get("/dashboard", PageController, :dashboard)
     post("/add_question", PageController, :add_question)
     get("/question", PageController, :question)
+    get("/myquestions", PageController, :get_my_questions)
+    get("/allquestions", PageController, :get_all_questions)
     get("/approve_user", PageController, :approve_user)
 
     get("/question/:question_uuid/answers", PageController, :get_answers)
     post("/add_answer", PageController, :add_answer)
+    post("/answer/:answer_uuid", PageController, :mark_correct_answer)
+
+    post(
+      "/question/:question_uuid/answer/:answer_uuid/vote/:vote_type",
+      PageController,
+      :add_vote
+    )
   end
 
   scope "/", WmDevForumWeb do

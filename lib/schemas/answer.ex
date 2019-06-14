@@ -2,7 +2,7 @@ defmodule WmDevForum.Schema.Answer do
   use Ecto.Schema
   import Ecto.Changeset
   alias Ecto.Changeset
-  alias WmDevForum.Schema.{User, Question, Answer}
+  alias WmDevForum.Schema.{User, Question, Answer, Vote}
   alias Comeonin.Bcrypt
 
   @primary_key {:uuid, :binary_id, autogenerate: true}
@@ -24,6 +24,8 @@ defmodule WmDevForum.Schema.Answer do
       references: :uuid,
       define_field: false
     )
+
+    has_many(:votes, Vote, foreign_key: :answer_uuid)
 
     timestamps()
   end

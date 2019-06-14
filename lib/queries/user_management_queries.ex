@@ -1,5 +1,5 @@
 defmodule WmDevForum.UserManagementQueries do
-  alias WmDevForum.Schema.{User, Question, Tag, QuestionTag, Answer}
+  alias WmDevForum.Schema.{User, Question, Tag, QuestionTag, Answer, Vote}
   alias WmDevForum.Repo
   import Ecto.Query
   alias Ecto.Multi
@@ -76,6 +76,25 @@ defmodule WmDevForum.UserManagementQueries do
     )
   end
 
+  def get_questions_by_user(user_uuid) do
+    Repo.all(
+      from(q in Question,
+        inner_join: u in User,
+        on: q.user_uuid == u.uuid,
+        where: q.user_uuid == ^user_uuid,
+        select: %{
+          question_text: q.title,
+          description: q.description,
+          question_uuid: q.uuid,
+          first_name: u.first_name,
+          last_name: u.last_name,
+          user_uuid: u.uuid
+        },
+        order_by: [desc: q.inserted_at]
+      )
+    )
+  end
+
   def check_if_user_is_authentic(user_name, password) do
     Repo.one(
       from(u in User,
@@ -113,7 +132,7 @@ defmodule WmDevForum.UserManagementQueries do
   end
 
   def get_answers_by_question_uuid(question_uuid) do
-    from(ans in Answer, where: ans.question_uuid == ^question_uuid, preload: [:user])
+    from(ans in Answer, where: ans.question_uuid == ^question_uuid, preload: [:user, :votes])
     |> Repo.all()
   end
 
@@ -140,6 +159,18 @@ defmodule WmDevForum.UserManagementQueries do
       user_uuid: user_uuid,
       answer_text: answer_text
     })
+    |> Repo.insert()
+  end
+
+  def update_answer(answer_uuid, data) do
+    answer = Repo.get(Answer, answer_uuid)
+
+    Answer.update_changeset(answer, data)
+    |> Repo.update()
+  end
+
+  def add_vote(data) do
+    Vote.create_changeset(data)
     |> Repo.insert()
   end
 end

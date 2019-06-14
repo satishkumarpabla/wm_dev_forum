@@ -1,7 +1,7 @@
 defmodule WmDevForumWeb.PageController do
   use WmDevForumWeb, :controller
   alias WmDevForum.UserManagement
-  alias WmDevForum.Schema.User
+  alias WmDevForum.Schema.{User, Answer}
 
   def index(conn, _params) do
     render(conn, "index.html")
@@ -48,11 +48,50 @@ defmodule WmDevForumWeb.PageController do
     end
   end
 
+  def dashboard(conn, _params) do
+    questions = UserManagement.get_questions()
+
+    user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
+
+    conn
+    |> render("dashboard.html", %{questions: questions, user_stats: user_stats})
+  end
+
   defp get_all_users(conn) do
     users = UserManagement.get_all_users()
 
     render(conn, "admin-dashboard.html", users: users)
     # render(conn, "index.html")
+  end
+
+  def get_all_questions(conn, _p) do
+    loggedin_user =
+      conn
+      |> get_session(:user)
+
+    questions = UserManagement.get_questions()
+    user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+
+    render(conn, "dashboard.html",
+      questions: questions,
+      user_stats: user_stats,
+      my_questions: false
+    )
+  end
+
+  def get_my_questions(conn, _p) do
+    loggedin_user =
+      conn
+      |> get_session(:user)
+
+    questions = UserManagement.get_questions_by_user(loggedin_user.uuid)
+    user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+
+    render(conn, "dashboard.html",
+      questions: questions,
+      user_stats: user_stats,
+      my_questions: true
+    )
   end
 
   def question(conn, _param) do
@@ -67,10 +106,15 @@ defmodule WmDevForumWeb.PageController do
       conn
       |> get_session(:user)
 
-    IO.inspect(question_text, label: "===>: ")
     UserManagement.post_question(params, loggedin_user)
     questions = UserManagement.get_questions()
-    render(conn, "dashboard.html", questions: questions)
+    user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+
+    render(conn, "dashboard.html",
+      questions: questions,
+      user_stats: user_stats,
+      my_questions: false
+    )
   end
 
   def login_user(conn, params) do
@@ -89,13 +133,21 @@ defmodule WmDevForumWeb.PageController do
         |> get_all_users()
 
       %User{is_admin: false} ->
-        questions = UserManagement.get_questions()
+        loggedin_user =
+          conn
+          |> get_session(:user)
 
+        UserManagement.post_question(params, loggedin_user)
+        questions = UserManagement.get_questions()
         user_stats = get_user_stats(user.uuid)
 
         conn
         |> put_session(:user, user)
-        |> render("dashboard.html", %{questions: questions, user_stats: user_stats})
+        |> render("dashboard.html", %{
+          questions: questions,
+          user_stats: user_stats,
+          my_questions: false
+        })
 
       _ ->
         render(conn, "error-page.html")
@@ -124,6 +176,7 @@ defmodule WmDevForumWeb.PageController do
 
   def get_answers(conn, params) do
     answers = UserManagement.get_answers_by_question_uuid(Map.get(params, "question_uuid"))
+
     question = UserManagement.get_question_by_uuid(Map.get(params, "question_uuid"))
     render(conn, "answers.html", answers: answers, question: question)
   end
@@ -135,12 +188,40 @@ defmodule WmDevForumWeb.PageController do
 
     answers = UserManagement.get_answers_by_question_uuid(Map.get(params, "question_uuid"))
     question = UserManagement.get_question_by_uuid(Map.get(params, "question_uuid"))
-    render(conn, "answers.html", answers: answers, question: question)
+
+    conn
+    |> redirect(to: page_path(conn, :get_answers, params["question_uuid"]))
   end
 
   def logout(conn, params) do
     conn
     |> configure_session(drop: true)
     |> redirect(to: page_path(conn, :index))
+  end
+
+  def mark_correct_answer(
+        conn,
+        %{"answer_uuid" => answer_uuid} = _params
+      ) do
+    {:ok, %Answer{question_uuid: question_uuid}} = UserManagement.mark_correct_answer(answer_uuid)
+
+    conn
+    |> redirect(to: page_path(conn, :get_answers, question_uuid))
+  end
+
+  def add_vote(
+        conn,
+        %{
+          "answer_uuid" => answer_uuid,
+          "vote_type" => vote_type,
+          "question_uuid" => question_uuid
+        } = _params
+      ) do
+    user_uuid = conn.assigns.user.uuid
+
+    UserManagement.add_vote(answer_uuid, user_uuid, vote_type)
+
+    conn
+    |> redirect(to: page_path(conn, :get_answers, question_uuid))
   end
 end
