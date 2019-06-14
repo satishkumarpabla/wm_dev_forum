@@ -38,12 +38,27 @@
                   </div>
                   <p class="text-right">
                       <%=  if answer.is_correct do %>
-                        <img src="https://img.icons8.com/color/48/000000/double-tick.png" >
+                        <img src="https://img.icons8.com/color/20/000000/double-tick.png" >
                       <%= else %>
-                        <%= link to: page_path(@conn, :mark_correct_answer, answer.uuid ), class: "btn btn-default btn-sm", method: :post do %>
-                              <img src="https://img.icons8.com/color/48/000000/checkmark.png" />
+                        <%= link to: page_path(@conn, :mark_correct_answer, answer.uuid ), class: "btn btn-default btn-sm", method: :post, title: "Mark as correct answer" do %>
+                              <img src="https://img.icons8.com/color/20/000000/checkmark.png" />
                         <%= end %>
                       <%= end %>
+                      <!-- Up Vote -->
+                      <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "up"), class: "btn btn-default btn-sm", method: :post do %>
+                            <img src="https://img.icons8.com/office/20/000000/up.png">
+                            <span>3</span>
+                      <%= end %>
+
+                      <!-- down Vote -->
+                      <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "down" ), class: "btn btn-default btn-sm", method: :post do %>
+                            <img src="https://img.icons8.com/office/20/000000/down.png">
+                            <span>5</span>
+
+                      <%= end %>
+
+
+
                   </p>
 
                 </div>

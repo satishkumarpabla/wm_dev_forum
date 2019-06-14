@@ -1,5 +1,5 @@
 defmodule WmDevForum.UserManagementQueries do
-  alias WmDevForum.Schema.{User, Question, Tag, QuestionTag, Answer}
+  alias WmDevForum.Schema.{User, Question, Tag, QuestionTag, Answer, Vote}
   alias WmDevForum.Repo
   import Ecto.Query
   alias Ecto.Multi
@@ -128,5 +128,10 @@ defmodule WmDevForum.UserManagementQueries do
 
     Answer.update_changeset(answer, data)
     |> Repo.update()
+  end
+
+  def add_vote(data) do
+    Vote.create_changeset(data)
+    |> Repo.insert()
   end
 end
