@@ -10,7 +10,11 @@ defmodule WmDevForum.UserManagementQueries do
   end
 
   def post_question(question) do
-    Question.create_changeset(%{title: question, description: "this is that"})
+    Question.create_changeset(%{
+      title: question,
+      description: "this is that",
+      user_uuid: "763d9d88-ac8c-4213-8819-7b853d66c980"
+    })
     |> Repo.insert()
   end
 
@@ -38,9 +42,8 @@ defmodule WmDevForum.UserManagementQueries do
   def approve_user(user_uuid) do
     user_data_from_database = User |> Repo.get_by(uuid: user_uuid)
 
-    changeset =
-      User.update_changeset(user_data_from_database, %{is_accepted: true})
-      |> Repo.update()
+    User.update_changeset(user_data_from_database, %{is_accepted: true})
+    |> Repo.update()
   end
 
   def delete_user(user_uuid) do
