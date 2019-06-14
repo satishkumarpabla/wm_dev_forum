@@ -10,6 +10,14 @@
   border-top-right-radius:0px;
   top: 1px;
 }
+.pngcorrect{
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  margin-bottom: 1em;
+  background-image: url("/images/iconfinder_correct.png");
+
+}
 .comment-list .panel .panel-heading.right {
   border-right-width: 0px;
   /*Panel-heading border radius*/
