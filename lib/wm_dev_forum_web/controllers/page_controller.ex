@@ -32,6 +32,15 @@ defmodule WmDevForumWeb.PageController do
     end
   end
 
+  def dashboard(conn, _params) do
+    questions = UserManagement.get_questions()
+
+    user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
+
+    conn
+    |> render("dashboard.html", %{questions: questions, user_stats: user_stats})
+  end
+
   defp get_all_users(conn) do
     users = UserManagement.get_all_users()
 
@@ -51,11 +60,10 @@ defmodule WmDevForumWeb.PageController do
       conn
       |> get_session(:user)
 
-    IO.inspect(question_text, label: "===>: ")
     UserManagement.post_question(params, loggedin_user)
-    questions = UserManagement.get_questions()
-    user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
-    render(conn, "dashboard.html", questions: questions, user_stats: user_stats)
+
+    conn
+    |> redirect(to: page_path(conn, :dashboard))
   end
 
   def login_user(conn, params) do
@@ -74,13 +82,9 @@ defmodule WmDevForumWeb.PageController do
         |> get_all_users()
 
       %User{is_admin: false} ->
-        questions = UserManagement.get_questions()
-
-        user_stats = UserManagement.get_user_stats(user.uuid)
-
         conn
         |> put_session(:user, user)
-        |> render("dashboard.html", %{questions: questions, user_stats: user_stats})
+        |> redirect(to: page_path(conn, :dashboard))
 
       _ ->
         render(conn, "error-page.html")
@@ -105,6 +109,7 @@ defmodule WmDevForumWeb.PageController do
 
   def get_answers(conn, params) do
     answers = UserManagement.get_answers_by_question_uuid(Map.get(params, "question_uuid"))
+
     question = UserManagement.get_question_by_uuid(Map.get(params, "question_uuid"))
     render(conn, "answers.html", answers: answers, question: question)
   end
@@ -116,7 +121,9 @@ defmodule WmDevForumWeb.PageController do
 
     answers = UserManagement.get_answers_by_question_uuid(Map.get(params, "question_uuid"))
     question = UserManagement.get_question_by_uuid(Map.get(params, "question_uuid"))
-    render(conn, "answers.html", answers: answers, question: question)
+
+    conn
+    |> redirect(to: page_path(conn, :get_answers, params["question_uuid"]))
   end
 
   def logout(conn, params) do

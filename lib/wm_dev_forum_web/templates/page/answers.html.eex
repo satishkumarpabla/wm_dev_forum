@@ -45,15 +45,16 @@
                         <%= end %>
                       <%= end %>
                       <!-- Up Vote -->
+
                       <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "up"), class: "btn btn-default btn-sm", method: :post do %>
                             <img src="https://img.icons8.com/office/20/000000/up.png">
-                            <span>3</span>
+                            <span><%=answer.up_votes%></span>
                       <%= end %>
 
                       <!-- down Vote -->
                       <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "down" ), class: "btn btn-default btn-sm", method: :post do %>
                             <img src="https://img.icons8.com/office/20/000000/down.png">
-                            <span>5</span>
+                            <span><%=answer.down_votes%></span>
 
                       <%= end %>
 
