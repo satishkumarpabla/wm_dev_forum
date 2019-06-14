@@ -1,5 +1,4 @@
 <div>
-  <p>Question</p>
   <%= form_for @conn, page_path(@conn, :add_answer), [id: :signupform], fn(f)-> %>
   <div>
   <%= label f, :question, "Question: " %>
@@ -12,7 +11,9 @@
     <%= for answer <- @answers do %>
         <div>
           <%= answer.answer_text %>
+          <div>by: <%= answer.user.first_name %> <%= answer.user.last_name %> </div>
         </div>
+      </br>
     <% end %>
     <% end %>
 </div>
@@ -21,7 +22,7 @@
   <textarea name="answer" ></textarea>
   <input type="hidden"  name="question_uuid" value="<%= @question.uuid %>"></input>
 </div>
-  <!-- <input type = "textarea" name="question_text"> </input> -->
+
   <button type="submit"> <%= gettext("Submit Answer") %></input>
   <% end %>
   <br/>
