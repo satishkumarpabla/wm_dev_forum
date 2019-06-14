@@ -1,10 +1,36 @@
 <div>
   <p> Admin Account </p>
+
+  <%= if @users == [] do %>
+
+        <h1> Sorry but there are no users for you to view. :-( </h1>
+
+  <%= else %>
   <%=  for key <- @users do %>
-  <div><div> <%= key.first_name %> </div>
-  <div> <%= key.last_name %> </div>
-  <div> <%= key.email %> </div>
-  <div><a> <%= "Approve User" %> </a></div>
-</div>
+  <table>
+    <tr>
+      <th> First Name </th>
+      &nbsp
+      <th> Last Name </th>
+      <th> Email </th>
+      <th>   </th>
+    </tr>
+    <tr>
+      <td>  <%= key.first_name %> </td>
+      <td>  <%= key.last_name %> </td>
+      <td>  <%= key.email %> </td>
+      <td>
+        <%= link "Approve User", to: page_path(@conn, :approve_user, key) %>
+      </td>
+
+      <td>
+        <%= link "Delete User", to: page_path(@conn, :delete_user, key) %>
+      </td>
+
+
+    </tr>
+    <% end %>
+  </table>
+
   <% end %>
 </div>
