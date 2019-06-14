@@ -1,4 +1,49 @@
 <div class="jumbotron">
-  <p>hell yeah</p>
-  <a href="/question">Add Question</a>
+  <p align="left">Dashboard</p>
+  <p align="right"><a href="/question">Add Question</a></p>
+  <!-- <%=  for question <- @questions do %>
+  <div>
+    <P><a href=<%= "/question/"<>question.question_uuid <> "/answers" %> > <%=question.question_text%></a></P>
+    <P><%=question.description%></p>
+      <p><%=question.first_name<>" "<> question.last_name%></p>
+  </div>
+  <%= end %> -->
+</div>
+</div>
+<!-- <div>
+<div class="row justify-content-around calendar">
+<div class="card calendar-groot gray" >
+
+        <div class="card-body calendar-groot">
+            <h5 class="card-title calendar-groot">Dashboard</h5>
+            <input type="dropdown" id="filter" name="filter" , value="All"  >
+        </div>
+        <div class="calendar-poster"><a href="/question">Add Question</a></div>
+</div>
+</div>
+</div> -->
+
+</div>
+</div>
+<div > <div align="center">Questions:</div>
+<section class="details-card">
+    <div class="container">
+        <div class="row">
+          <%=  for question <- @questions do %>
+            <div class="col-md-4">
+                <div class="card-content">
+                    <div class="card-img">
+                       <%=question.question_text%>
+                    </div>
+                    <div class="card-desc">
+
+                        <p><%=question.description%></p>
+                            <a href=<%= "/question/"<>question.question_uuid <> "/answers" %> class="btn-card">Answer</a>
+                    </div>
+                </div>
+            </div>
+          <%= end %>
+        </div>
+    </div>
+</section>
 </div>

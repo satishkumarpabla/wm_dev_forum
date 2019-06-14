@@ -17,12 +17,33 @@ defmodule WmDevForum.UserManagement do
     UserManagementQueries.getTags()
   end
 
-  def post_question(params) do
+  def post_question(params, loggedin_user) do
     # question_data = %{}
-    UserManagementQueries.post_question(params |> Map.get("question_text"))
+    UserManagementQueries.post_question(
+      params |> Map.get("question_text"),
+      params |> Map.get("description"),
+      params |> Map.get("tag_value"),
+      loggedin_user.uuid
+    )
+  end
+
+  def get_questions() do
+    UserManagementQueries.get_questions()
   end
 
   def approve_user(params) do
     UserManagementQueries.approve_user(params |> Map.get("uuid"))
+  end
+
+  def get_answers_by_question_uuid(question_uuid) do
+    UserManagementQueries.get_answers_by_question_uuid(question_uuid)
+  end
+
+  def get_question_by_uuid(question_uuid) do
+    UserManagementQueries.get_question_by_uuid(question_uuid)
+  end
+
+  def add_answer(question_uuid, user_uuid, answer_text) do
+    UserManagementQueries.add_answer(question_uuid, user_uuid, answer_text)
   end
 end
