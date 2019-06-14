@@ -15,13 +15,14 @@
 
         <section class="comment-list">
           <%= if @answers != [] do %>
-          <%= for answer <- @answers do %>
+          <%= for answer <- Enum.sort(@answers, &(&1.inserted_at <= &2.inserted_at)) do %>
           <!-- First Comment -->
           <article class="row">
             <div class="col-md-3 col-sm-3 hidden-xs">
               <figure class="thumbnail">
 
                  <%= answer.user.first_name %> <%= answer.user.last_name %>
+                 
               </figure>
             </div>
             <div class="col-md-9 col-sm-9">

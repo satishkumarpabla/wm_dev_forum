@@ -137,9 +137,9 @@ defmodule WmDevForumWeb.PageController do
         %{"answer_uuid" => answer_uuid} = _params
       ) do
     {:ok, %Answer{question_uuid: question_uuid}} = UserManagement.mark_correct_answer(answer_uuid)
-    answers = UserManagement.get_answers_by_question_uuid(question_uuid)
-    question = UserManagement.get_question_by_uuid(question_uuid)
-    render(conn, "answers.html", answers: answers, question: question)
+
+    conn
+    |> redirect(to: page_path(conn, :get_answers, question_uuid))
   end
 
   def add_vote(
@@ -154,8 +154,7 @@ defmodule WmDevForumWeb.PageController do
 
     UserManagement.add_vote(answer_uuid, user_uuid, vote_type)
 
-    answers = UserManagement.get_answers_by_question_uuid(question_uuid)
-    question = UserManagement.get_question_by_uuid(question_uuid)
-    render(conn, "answers.html", answers: answers, question: question)
+    conn
+    |> redirect(to: page_path(conn, :get_answers, question_uuid))
   end
 end
