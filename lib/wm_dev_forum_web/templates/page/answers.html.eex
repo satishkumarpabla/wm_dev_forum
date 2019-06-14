@@ -1,0 +1,28 @@
+<div>
+  <p>Question</p>
+  <%= form_for @conn, page_path(@conn, :add_answer), [id: :signupform], fn(f)-> %>
+  <div>
+  <%= label f, :question, "Question: " %>
+  <span> <%= @question.title %> </span>
+</div>
+<div>
+    <%= if @answers != [] do %>
+
+    <%= label f, :answers, "Answers" %>
+    <%= for answer <- @answers do %>
+        <div>
+          <%= answer.answer_text %>
+        </div>
+    <% end %>
+    <% end %>
+</div>
+<div>
+  <label> Add new answer: </label>
+  <textarea name="answer" ></textarea>
+  <input type="hidden"  name="question_uuid" value="<%= @question.uuid %>"></input>
+</div>
+  <!-- <input type = "textarea" name="question_text"> </input> -->
+  <button type="submit"> <%= gettext("Submit Answer") %></input>
+  <% end %>
+  <br/>
+</div>

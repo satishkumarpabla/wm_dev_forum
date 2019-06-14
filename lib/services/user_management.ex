@@ -37,4 +37,16 @@ defmodule WmDevForum.UserManagement do
         UserManagementQueries.delete_user(user_uuid)
     end
   end
+
+  def get_answers_by_question_uuid(question_uuid) do
+    UserManagementQueries.get_answers_by_question_uuid(question_uuid)
+  end
+
+  def get_question_by_uuid(question_uuid) do
+    UserManagementQueries.get_question_by_uuid(question_uuid)
+  end
+
+  def add_answer(question_uuid, user_uuid, answer_text) do
+    UserManagementQueries.add_answer(question_uuid, user_uuid, answer_text)
+  end
 end

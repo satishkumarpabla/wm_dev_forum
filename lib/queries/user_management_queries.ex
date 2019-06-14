@@ -1,5 +1,5 @@
 defmodule WmDevForum.UserManagementQueries do
-  alias WmDevForum.Schema.{User, Question, Tag}
+  alias WmDevForum.Schema.{User, Question, Tag, Answer}
   alias WmDevForum.Repo
   import Ecto.Query
   alias Ecto.Multi
@@ -53,5 +53,23 @@ defmodule WmDevForum.UserManagementQueries do
         where: user.uuid == ^user_uuid
       )
     )
+  end
+
+  def get_answers_by_question_uuid(question_uuid) do
+    from(ans in Answer, where: ans.question_uuid == ^question_uuid)
+    |> Repo.all()
+  end
+
+  def get_question_by_uuid(question_uuid) do
+    Repo.get(Question, question_uuid)
+  end
+
+  def add_answer(question_uuid, user_uuid, answer_text) do
+    Answer.create_changeset(%{
+      question_uuid: question_uuid,
+      user_uuid: user_uuid,
+      answer_text: answer_text
+    })
+    |> Repo.insert()
   end
 end

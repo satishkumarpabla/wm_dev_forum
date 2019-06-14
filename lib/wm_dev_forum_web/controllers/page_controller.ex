@@ -62,10 +62,14 @@ defmodule WmDevForumWeb.PageController do
         render(conn, "error-page.html")
 
       %User{is_admin: true} ->
-        get_all_users(conn)
+        conn
+        |> put_session(:user, user)
+        |> get_all_users()
 
       %User{is_admin: false} ->
-        render(conn, "dashboard.html")
+        conn
+        |> put_session(:user, user)
+        |> render("dashboard.html")
 
       _ ->
         render(conn, "error-page.html")
@@ -92,5 +96,21 @@ defmodule WmDevForumWeb.PageController do
     with {:ok, _} <- UserManagement.delete_user(params |> Map.get("uuid")) do
       get_all_users(conn)
     end
+  end
+
+  def get_answers(conn, params) do
+    answers = UserManagement.get_answers_by_question_uuid(Map.get(params, "question_uuid"))
+    question = UserManagement.get_question_by_uuid(Map.get(params, "question_uuid"))
+    render(conn, "answers.html", answers: answers, question: question)
+  end
+
+  def add_answer(conn, params) do
+    user_uuid = conn |> get_session(:user) |> Map.get(:uuid)
+
+    UserManagement.add_answer(params["question_uuid"], user_uuid, params["answer"])
+
+    answers = UserManagement.get_answers_by_question_uuid(Map.get(params, "question_uuid"))
+    question = UserManagement.get_question_by_uuid(Map.get(params, "question_uuid"))
+    render(conn, "answers.html", answers: answers, question: question)
   end
 end
