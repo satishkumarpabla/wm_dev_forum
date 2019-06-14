@@ -1,5 +1,5 @@
 defmodule WmDevForum.UserManagementQueries do
-  alias WmDevForum.Schema.{User, Question, Tag, Answer}
+  alias WmDevForum.Schema.{User, Question, Tag, QuestionTag, Answer}
   alias WmDevForum.Repo
   import Ecto.Query
   alias Ecto.Multi
@@ -9,13 +9,35 @@ defmodule WmDevForum.UserManagementQueries do
     |> Repo.insert()
   end
 
-  def post_question(question, description) do
-    Question.create_changeset(%{
-      title: question,
-      description: description,
-      user_uuid: "763d9d88-ac8c-4213-8819-7b853d66c980"
-    })
+  def post_question(question, description, tag_value, loggedin_user_uuid) do
+    {:ok, question} =
+      Question.create_changeset(%{
+        title: question,
+        description: description,
+        user_uuid: loggedin_user_uuid
+      })
+      |> Repo.insert()
+
+    QuestionTag.create_changeset(%{question_uuid: question.uuid, tag_uuid: tag_value})
     |> Repo.insert()
+  end
+
+  def get_questions() do
+    Repo.all(
+      from(q in Question,
+        inner_join: u in User,
+        on: q.user_uuid == u.uuid,
+        select: %{
+          question_text: q.title,
+          description: q.description,
+          question_uuid: q.uuid,
+          first_name: u.first_name,
+          last_name: u.last_name,
+          user_uuid: u.uuid
+        },
+        order_by: [desc: q.inserted_at]
+      )
+    )
   end
 
   def check_if_user_is_authentic(user_name, password) do

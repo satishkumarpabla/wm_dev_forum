@@ -46,9 +46,15 @@ defmodule WmDevForumWeb.PageController do
 
   def add_question(conn, params) do
     question_text = params |> Map.get("question_text")
+
+    loggedin_user =
+      conn
+      |> get_session(:user)
+
     IO.inspect(question_text, label: "===>: ")
-    UserManagement.post_question(params)
-    render(conn, "dashboard.html")
+    UserManagement.post_question(params, loggedin_user)
+    questions = UserManagement.get_questions()
+    render(conn, "dashboard.html", questions: questions)
   end
 
   def login_user(conn, params) do
@@ -67,9 +73,11 @@ defmodule WmDevForumWeb.PageController do
         |> get_all_users()
 
       %User{is_admin: false} ->
+        questions = UserManagement.get_questions()
+
         conn
         |> put_session(:user, user)
-        |> render("dashboard.html")
+        |> render("dashboard.html", questions: questions)
 
       _ ->
         render(conn, "error-page.html")

@@ -1,4 +1,11 @@
 <div class="jumbotron">
   <p>hell yeah</p>
   <a href="/question">Add Question</a>
+  <%=  for question <- @questions do %>
+  <div>
+    <P><%=question.question_text%></P>
+    <P><%=question.description%></p>
+      <p><%=question.first_name<>" "<> question.last_name%></p>
+  </div>
+  <%= end %>
 </div>
