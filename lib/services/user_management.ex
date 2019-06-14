@@ -19,7 +19,10 @@ defmodule WmDevForum.UserManagement do
 
   def post_question(params) do
     # question_data = %{}
-    UserManagementQueries.post_question(params |> Map.get("question_text"))
+    UserManagementQueries.post_question(
+      params |> Map.get("question_text"),
+      params |> Map.get("description")
+    )
   end
 
   def approve_user(params) do
