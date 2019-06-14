@@ -28,6 +28,8 @@ defmodule WmDevForumWeb.Router do
     post("/login_user", PageController, :login_user)
     post("/add_question", PageController, :add_question)
     get("/question", PageController, :question)
+    get("/approve_user", PageController, :approve_user)
+    get("/delete_user", PageController, :delete_user)
 
     get("/", PageController, :index)
   end

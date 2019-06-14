@@ -71,4 +71,26 @@ defmodule WmDevForumWeb.PageController do
         render(conn, "error-page.html")
     end
   end
+
+  def approve_user(conn, params) do
+    user_name = (params |> Map.get("first_name")) <> " " <> (params |> Map.get("last_name"))
+
+    case UserManagement.approve_user(params) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, gettext("User {%user_name} Successfully Approved."))
+
+      {:error, _} ->
+        conn
+        |> put_flash(:info, gettext("Unable to approve user."))
+    end
+
+    get_all_users(conn)
+  end
+
+  def delete_user(conn, params) do
+    with {:ok, _} <- UserManagement.delete_user(params |> Map.get("uuid")) do
+      get_all_users(conn)
+    end
+  end
 end
