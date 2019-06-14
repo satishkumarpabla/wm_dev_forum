@@ -1,6 +1,22 @@
 <div class="jumbotron">
-  <p align="left">Dashboard</p>
-  <p align="right"><a href="/question">Add Question</a></p>
+  <h2 class = "text-top	text-bottom">Dashboard</h2>
+  <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <span> <%= @user_stats.total_answers %> </span>
+          <h3>  Total Answers </h3>
+        </div>
+        <div class="col-sm">
+          <span> <%= @user_stats.number_of_correct_answers %> </span>
+            <h3> Correct Answers </h3>
+        </div>
+        <div class="col-sm">
+          <span> <%= @user_stats.total_questions_posted %> </span>
+          <h3> Questions Asked </h3>
+        </div>
+      </div>
+  </div>
+  <p class ="baseline	bottom"><a href="/question">Add Question</a></p>
   <!-- <%=  for question <- @questions do %>
   <div>
     <P><a href=<%= "/question/"<>question.question_uuid <> "/answers" %> > <%=question.question_text%></a></P>

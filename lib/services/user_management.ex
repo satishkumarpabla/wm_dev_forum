@@ -9,6 +9,29 @@ defmodule WmDevForum.UserManagement do
     UserManagementQueries.check_if_user_is_authentic(user_name, password)
   end
 
+  def get_user_stats(user_uuid) do
+    user_answers = UserManagementQueries.get_users_total_answers_by_user_uuid(user_uuid)
+
+    number_of_correct_answers =
+      user_answers
+      |> Enum.filter(fn answer -> answer.is_correct end)
+      |> Enum.count()
+
+    total_answers =
+      user_answers
+      |> Enum.count()
+
+    # up_votes and down votes data to be fetched later once the respective functionalities are implemented
+
+    total_questions_posted = UserManagementQueries.get_total_questions_posted_by_user(user_uuid)
+
+    %{
+      number_of_correct_answers: number_of_correct_answers,
+      total_answers: total_answers,
+      total_questions_posted: total_questions_posted
+    }
+  end
+
   def get_all_users() do
     UserManagementQueries.get_all_users()
   end
@@ -33,18 +56,6 @@ defmodule WmDevForum.UserManagement do
 
   def approve_user(params) do
     UserManagementQueries.approve_user(params |> Map.get("uuid"))
-  end
-
-  def delete_user(user_uuid) do
-    user_to_be_deleted = UserManagementQueries.get_user_from_user_uuid(user_uuid)
-
-    case user_to_be_deleted do
-      nil ->
-        {:error, :no_user_records_found}
-
-      %{} ->
-        UserManagementQueries.delete_user(user_uuid)
-    end
   end
 
   def get_answers_by_question_uuid(question_uuid) do

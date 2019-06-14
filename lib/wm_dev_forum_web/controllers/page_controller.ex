@@ -75,9 +75,11 @@ defmodule WmDevForumWeb.PageController do
       %User{is_admin: false} ->
         questions = UserManagement.get_questions()
 
+        user_stats = UserManagement.get_user_stats(user.uuid)
+
         conn
         |> put_session(:user, user)
-        |> render("dashboard.html", questions: questions)
+        |> render("dashboard.html", %{questions: questions, user_stats: user_stats})
 
       _ ->
         render(conn, "error-page.html")
@@ -98,12 +100,6 @@ defmodule WmDevForumWeb.PageController do
     end
 
     get_all_users(conn)
-  end
-
-  def delete_user(conn, params) do
-    with {:ok, _} <- UserManagement.delete_user(params |> Map.get("uuid")) do
-      get_all_users(conn)
-    end
   end
 
   def get_answers(conn, params) do
