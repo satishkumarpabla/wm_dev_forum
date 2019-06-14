@@ -54,6 +54,10 @@ defmodule WmDevForum.UserManagement do
     UserManagementQueries.get_questions()
   end
 
+  def get_questions_by_user(user_uuid) do
+    UserManagementQueries.get_questions_by_user(user_uuid)
+  end
+
   def approve_user(params) do
     UserManagementQueries.approve_user(params |> Map.get("uuid"))
   end

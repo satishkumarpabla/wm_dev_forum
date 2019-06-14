@@ -31,6 +31,8 @@ defmodule WmDevForumWeb.Router do
 
     post("/add_question", PageController, :add_question)
     get("/question", PageController, :question)
+    get("/myquestions", PageController, :get_my_questions)
+    get("/allquestions", PageController, :get_all_questions)
     get("/approve_user", PageController, :approve_user)
 
     get("/question/:question_uuid/answers", PageController, :get_answers)

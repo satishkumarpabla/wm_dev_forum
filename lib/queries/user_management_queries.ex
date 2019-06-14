@@ -56,6 +56,25 @@ defmodule WmDevForum.UserManagementQueries do
     )
   end
 
+  def get_questions_by_user(user_uuid) do
+    Repo.all(
+      from(q in Question,
+        inner_join: u in User,
+        on: q.user_uuid == u.uuid,
+        where: q.user_uuid == ^user_uuid,
+        select: %{
+          question_text: q.title,
+          description: q.description,
+          question_uuid: q.uuid,
+          first_name: u.first_name,
+          last_name: u.last_name,
+          user_uuid: u.uuid
+        },
+        order_by: [desc: q.inserted_at]
+      )
+    )
+  end
+
   def check_if_user_is_authentic(user_name, password) do
     Repo.one(
       from(u in User,

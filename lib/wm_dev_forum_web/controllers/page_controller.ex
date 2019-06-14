@@ -39,6 +39,36 @@ defmodule WmDevForumWeb.PageController do
     # render(conn, "index.html")
   end
 
+  def get_all_questions(conn, _p) do
+    loggedin_user =
+      conn
+      |> get_session(:user)
+
+    questions = UserManagement.get_questions()
+    user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+
+    render(conn, "dashboard.html",
+      questions: questions,
+      user_stats: user_stats,
+      my_questions: false
+    )
+  end
+
+  def get_my_questions(conn, _p) do
+    loggedin_user =
+      conn
+      |> get_session(:user)
+
+    questions = UserManagement.get_questions_by_user(loggedin_user.uuid)
+    user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+
+    render(conn, "dashboard.html",
+      questions: questions,
+      user_stats: user_stats,
+      my_questions: true
+    )
+  end
+
   def question(conn, _param) do
     question_tags = UserManagement.getTags()
     render(conn, "add-question.html", tags: question_tags)
@@ -55,7 +85,12 @@ defmodule WmDevForumWeb.PageController do
     UserManagement.post_question(params, loggedin_user)
     questions = UserManagement.get_questions()
     user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
-    render(conn, "dashboard.html", questions: questions, user_stats: user_stats)
+
+    render(conn, "dashboard.html",
+      questions: questions,
+      user_stats: user_stats,
+      my_questions: false
+    )
   end
 
   def login_user(conn, params) do
@@ -80,7 +115,11 @@ defmodule WmDevForumWeb.PageController do
 
         conn
         |> put_session(:user, user)
-        |> render("dashboard.html", %{questions: questions, user_stats: user_stats})
+        |> render("dashboard.html", %{
+          questions: questions,
+          user_stats: user_stats,
+          my_questions: false
+        })
 
       _ ->
         render(conn, "error-page.html")
