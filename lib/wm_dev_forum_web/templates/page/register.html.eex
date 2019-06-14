@@ -1,39 +1,51 @@
-<div class="jumbotron">
-  <h2><%= gettext "Register for %{name}!", name: "Watermark Dev Forum" %></h2>
-  <div>
-    <%= form_for @conn, page_path(@conn, :create_user), [id: :signupform], fn f-> %>
-      
-      <%= label f, :first_name, gettext("First Name:"), class: "" %>
-      <%= text_input f, :first_name, class: "", placeholder: gettext("First Name")%>
-      <%= error_tag f, :first_name %>
+<body>
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Login form</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                      <h3 class="text-center text-info"><%= gettext "Register to %{name}!", name: "Watermark Dev Forum" %></h3>
+                      </br>
+                      <%= form_for @conn, page_path(@conn, :create_user), [id: :signupform], fn f-> %>
+
+                            <div class="form-group">
+
+                                <%= label f, :first_name, gettext("First Name:"), class: "text-info" %>
+                                <%= text_input f, :first_name, class: "form-control", required: true%>
+                                <%= error_tag f, :first_name %>
+                            </div>
+                            <div class="form-group">
+                                <%= label f, :last_name, gettext("Last Name:"), class: "text-info" %><br>
+                                <%= text_input f, :last_name, class: "form-control", required: true%>
+                                <%= error_tag f, :last_name %>
+                            </div>
 
 
-      <br/>
+                            <div class="form-group">
+                              <%= label f, :email, gettext("Email:"), class: "text-info" %>
+                              <%= email_input f, :email, class: "form-control", required: true%>
+                              <%= error_tag f, :email %>
+                            </div>
+                            <div class="form-group">
+                              <%= label f, :password, gettext("Password:"), class: "text-info"  %>
+                              <%= password_input f, :password, class: "form-control", required: true%>
+                              <%= error_tag f, :password %>
+                            </div>
+                            <div class="form-group">
+                              <%= label f, :confirm_password, gettext("Confirm Password:"), class: "text-info" %>
+                              <%= password_input f, :confirm_password, class: "form-control", required: true%>
+                              <%= error_tag f, :confirm_password %>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                            </div>
 
-      <%= label f, :last_name, gettext("Last Name:"), class: "" %>
-      <%= text_input f, :last_name, class: "", placeholder: gettext("Last Name")%>
-        <%= error_tag f, :last_name %>
-      <br/>
+                            <% end %>
 
-      <%= label f, :email, gettext("Email:"), class: "" %>
-      <%= email_input f, :email, class: "", placeholder: gettext("Email")%>
-      <%= error_tag f, :email %>
-
-      <br/>
-
-      <%= label f, :password, gettext("Password:"), class: "" %>
-      <%= password_input f, :password, class: "", placeholder: gettext("Password")%>
-      <%= error_tag f, :password %>
-
-      <br/>
-
-      <%= label f, :confirm_password, gettext("Confirm Password:"), class: "" %>
-      <%= password_input f, :confirm_password, class: "", placeholder: gettext("Confirm Password")%>
-      <%= error_tag f, :confirm_password %>
-
-      <br/>
-      <%= submit gettext("Register")   %>
-
-      <% end %>
-  </div>
-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
