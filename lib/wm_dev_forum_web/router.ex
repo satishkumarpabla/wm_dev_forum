@@ -31,6 +31,9 @@ defmodule WmDevForumWeb.Router do
     get("/approve_user", PageController, :approve_user)
     get("/delete_user", PageController, :delete_user)
 
+    get("/question/:question_uuid/answers", PageController, :get_answers)
+    post("/add_answer", PageController, :add_answer)
+
     get("/", PageController, :index)
   end
 
