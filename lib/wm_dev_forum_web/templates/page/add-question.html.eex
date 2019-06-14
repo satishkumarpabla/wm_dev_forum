@@ -8,25 +8,25 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textinput">Question</label>
-  <div class="col-md-8">
+  <label class="col-md-3 control-label" for="textinput">Question</label>
+  <div class="col-md-9">
   <input id="question_text" name="question_text"  type="text" placeholder="Question" class="form-control input-md">
   </div>
 </div>
 
 <!-- Textarea -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="textarea">Description</label>
-  <div class="col-md-8">
+  <label class="col-md-3 control-label" for="textarea">Description</label>
+  <div class="col-md-9">
     <textarea class="form-control" id="description" name="description" placeholder="description"></textarea>
   </div>
 </div>
 
 <!-- Multiple Radios -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="radios">Choose Tag</label>
+  <label class="col-md-3 control-label" for="radios">Choose Tag</label>
 
-  <div class="col-md-6">
+  <div class="col-md-9">
 
     <%= for option <- @tags do %>
   <div class="radio">
@@ -42,9 +42,9 @@
 
 <!-- Button -->
 <div class="form-group">
-
-  <div class="col-md-6">
-    <button id="singlebutton" type="submit" name="singlebutton" class="btn btn-primary"> <%= gettext("Submit") %></button>
+<label class="col-md-3 control-label"></label>
+  <div class="col-md-9">
+    <button id="singlebutton" type="submit"   name="singlebutton" class="btn btn-primary"> <%= gettext("Submit") %></button>
   </div>
 </div>
 
