@@ -10,6 +10,7 @@ defmodule WmDevForumWeb.VerifyUser do
     with %{} = user <- conn |> get_session(:user),
          %User{} <- UserManagementQueries.get_user_from_user_uuid(user.uuid) do
       conn
+      |> assign(:user, user)
     else
       _ ->
         conn

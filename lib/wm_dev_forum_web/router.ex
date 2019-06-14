@@ -29,9 +29,6 @@ defmodule WmDevForumWeb.Router do
     pipe_through(:browser)
     pipe_through(:verify)
 
-    get("/registerations/new", PageController, :register)
-    post("/registerations/create", PageController, :create_user)
-
     post("/add_question", PageController, :add_question)
     get("/question", PageController, :question)
     get("/approve_user", PageController, :approve_user)
@@ -46,6 +43,9 @@ defmodule WmDevForumWeb.Router do
     pipe_through(:browser)
     post("/login_user", PageController, :login_user)
     get("/logout", PageController, :logout)
+    get("/registerations/new", PageController, :register)
+    post("/registerations/create", PageController, :create_user)
+
     get("/", PageController, :index)
   end
 
