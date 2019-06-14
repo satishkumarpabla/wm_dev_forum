@@ -87,10 +87,4 @@ defmodule WmDevForumWeb.PageController do
 
     get_all_users(conn)
   end
-
-  def delete_user(conn, params) do
-    with {:ok, _} <- UserManagement.delete_user(params |> Map.get("uuid")) do
-      get_all_users(conn)
-    end
-  end
 end

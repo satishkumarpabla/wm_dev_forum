@@ -43,10 +43,6 @@ defmodule WmDevForum.UserManagementQueries do
       |> Repo.update()
   end
 
-  def delete_user(user_uuid) do
-    Repo.get!(User, user_uuid) |> Repo.delete()
-  end
-
   def get_user_from_user_uuid(user_uuid) do
     Repo.one(
       from(user in User,

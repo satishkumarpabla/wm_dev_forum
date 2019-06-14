@@ -25,16 +25,4 @@ defmodule WmDevForum.UserManagement do
   def approve_user(params) do
     UserManagementQueries.approve_user(params |> Map.get("uuid"))
   end
-
-  def delete_user(user_uuid) do
-    user_to_be_deleted = UserManagementQueries.get_user_from_user_uuid(user_uuid)
-
-    case user_to_be_deleted do
-      nil ->
-        {:error, :no_user_records_found}
-
-      %{} ->
-        UserManagementQueries.delete_user(user_uuid)
-    end
-  end
 end

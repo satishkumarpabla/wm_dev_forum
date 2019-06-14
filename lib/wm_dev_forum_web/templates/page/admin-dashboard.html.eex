@@ -23,9 +23,6 @@
         <%= link "Approve User", to: page_path(@conn, :approve_user, key) %>
       </td>
 
-      <td>
-        <%= link "Delete User", to: page_path(@conn, :delete_user, key) %>
-      </td>
 
 
     </tr>
