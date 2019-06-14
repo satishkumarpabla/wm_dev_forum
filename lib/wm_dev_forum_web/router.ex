@@ -41,6 +41,7 @@ defmodule WmDevForumWeb.Router do
     # Use the default browser stack
     pipe_through(:browser)
     post("/login_user", PageController, :login_user)
+    post("/search_questions", PageController, :search_questions)
     get("/logout", PageController, :logout)
     get("/registerations/new", PageController, :register)
     post("/registerations/create", PageController, :create_user)

@@ -9,6 +9,26 @@ defmodule WmDevForum.UserManagementQueries do
     |> Repo.insert()
   end
 
+  def get_search_results() do
+    Repo.all(from(que in Question))
+  end
+
+  def get_question_tags() do
+    Repo.all(
+      from(qtags in QuestionTag,
+        join: que in Question,
+        on: que.uuid == qtags.question_uuid,
+        join: tag in Tag,
+        on: tag.uuid == qtags.tag_uuid,
+        select: %{
+          que: que,
+          tag_title: tag.title,
+          uuid: tag.uuid
+        }
+      )
+    )
+  end
+
   def get_users_total_answers_by_user_uuid(user_uuid) do
     Repo.all(
       from(ans in Answer,

@@ -5,6 +5,50 @@ defmodule WmDevForum.UserManagement do
     UserManagementQueries.create_user(params)
   end
 
+  defp filter_tags_on_the_basis_of_tags(tag, tags_data_from_query) do
+    tags_data_from_query
+    |> Enum.map(fn query_tag ->
+      if query_tag.tag_title == tag do
+        query_tag
+      end
+    end)
+  end
+
+  defp get_filtered_results_on_title_description(questions, tag) do
+    questions
+    |> Enum.map(fn question ->
+      if question.title =~ tag || question.description =~ tag do
+        question
+      end
+    end)
+  end
+
+  def get_search_results(search_tags, user_uuid) do
+    questions = UserManagementQueries.get_search_results()
+
+    title_description_filter =
+      search_tags
+      |> String.split()
+      |> Enum.map(fn tag ->
+        get_filtered_results_on_title_description(questions, tag)
+      end)
+      |> Enum.concat()
+      |> Enum.filter(fn question -> question != nil end)
+
+    tags_data_from_query =
+      UserManagementQueries.get_question_tags()
+      |> Enum.uniq()
+
+    filter_for_tags =
+      search_tags
+      |> String.split()
+      |> Enum.map(fn tag ->
+        filter_tags_on_the_basis_of_tags(tag, tags_data_from_query)
+      end)
+      |> Enum.concat()
+      |> Enum.filter(fn question -> question != nil end)
+  end
+
   def login_user(user_name, password) do
     UserManagementQueries.check_if_user_is_authentic(user_name, password)
   end
