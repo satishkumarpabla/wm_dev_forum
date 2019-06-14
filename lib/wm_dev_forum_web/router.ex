@@ -29,6 +29,7 @@ defmodule WmDevForumWeb.Router do
     pipe_through(:browser)
     pipe_through(:verify)
 
+    get("/dashboard", PageController, :dashboard)
     post("/add_question", PageController, :add_question)
     get("/question", PageController, :question)
     get("/myquestions", PageController, :get_my_questions)

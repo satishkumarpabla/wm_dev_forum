@@ -112,7 +112,7 @@ defmodule WmDevForum.UserManagementQueries do
   end
 
   def get_answers_by_question_uuid(question_uuid) do
-    from(ans in Answer, where: ans.question_uuid == ^question_uuid, preload: [:user])
+    from(ans in Answer, where: ans.question_uuid == ^question_uuid, preload: [:user, :votes])
     |> Repo.all()
   end
 

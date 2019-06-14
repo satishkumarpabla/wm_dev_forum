@@ -64,6 +64,18 @@ defmodule WmDevForum.UserManagement do
 
   def get_answers_by_question_uuid(question_uuid) do
     UserManagementQueries.get_answers_by_question_uuid(question_uuid)
+    |> Enum.map(fn answer ->
+      {up_votes, down_votes} =
+        Enum.reduce(answer.votes, {0, 0}, fn vote, {up, down} ->
+          if vote.up do
+            {up + 1, down}
+          else
+            {up, down + 1}
+          end
+        end)
+
+      Map.merge(answer, %{up_votes: up_votes, down_votes: down_votes})
+    end)
   end
 
   def get_question_by_uuid(question_uuid) do

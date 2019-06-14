@@ -5,8 +5,6 @@ defmodule WmDevForumWeb.VerifyUser do
   alias WmDevForum.UserManagementQueries
 
   def verify_user(conn, _default) do
-    user = conn |> get_session(:user)
-
     with %{} = user <- conn |> get_session(:user),
          %User{} <- UserManagementQueries.get_user_from_user_uuid(user.uuid) do
       conn
