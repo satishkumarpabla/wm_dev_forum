@@ -9,6 +9,29 @@ defmodule WmDevForum.UserManagement do
     UserManagementQueries.check_if_user_is_authentic(user_name, password)
   end
 
+  def get_user_stats(user_uuid) do
+    user_answers = UserManagementQueries.get_users_total_answers_by_user_uuid(user_uuid)
+
+    number_of_correct_answers =
+      user_answers
+      |> Enum.filter(fn answer -> answer.is_correct end)
+      |> Enum.count()
+
+    total_answers =
+      user_answers
+      |> Enum.count()
+
+    # up_votes and down votes data to be fetched later once the respective functionalities are implemented
+
+    total_questions_posted = UserManagementQueries.get_total_questions_posted_by_user(user_uuid)
+
+    %{
+      number_of_correct_answers: number_of_correct_answers,
+      total_answers: total_answers,
+      total_questions_posted: total_questions_posted
+    }
+  end
+
   def get_all_users() do
     UserManagementQueries.get_all_users()
   end
