@@ -1,3 +1,58 @@
+<!-- <form class="form-horizontal"> -->
+<div class="form-horizontal">
+<%= form_for @conn, page_path(@conn, :add_question),  [id: :signupform], fn(f)-> %>
+<fieldset>
+
+<!-- Form Name -->
+<legend>Add Question</legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textinput">Question</label>
+  <div class="col-md-8">
+  <input id="question_text" name="question_text"  type="text" placeholder="Question" class="form-control input-md">
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="textarea">Description</label>
+  <div class="col-md-8">
+    <textarea class="form-control" id="description" name="description" placeholder="description"></textarea>
+  </div>
+</div>
+
+<!-- Multiple Radios -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="radios">Choose Tag</label>
+
+  <div class="col-md-6">
+
+    <%= for option <- @tags do %>
+  <div class="radio">
+    <label for="radios-0">
+      <input type="checkbox" id="tag_value" name="tag_value" f, value=<%= option.uuid %>  >
+      <%= option.title %>
+    </label>
+	</div>
+  <% end %>
+
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+
+  <div class="col-md-6">
+    <button id="singlebutton" type="submit" name="singlebutton" class="btn btn-primary"> <%= gettext("Submit") %></button>
+  </div>
+</div>
+
+</fieldset>
+<% end %>
+</div>
+
+<!--
 <div>
   <p>Add Question</p>
   <%= form_for @conn, page_path(@conn, :add_question), [id: :signupform], fn(f)-> %>
@@ -18,8 +73,8 @@
     <% end %>
 
 </div>
-  <!-- <input type = "textarea" name="question_text"> </input> -->
+
   <button type="submit"> <%= gettext("Submit") %></input>
   <% end %>
   <br/>
-</div>
+</div> -->

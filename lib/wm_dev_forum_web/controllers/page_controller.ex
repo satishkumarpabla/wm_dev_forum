@@ -54,7 +54,8 @@ defmodule WmDevForumWeb.PageController do
     IO.inspect(question_text, label: "===>: ")
     UserManagement.post_question(params, loggedin_user)
     questions = UserManagement.get_questions()
-    render(conn, "dashboard.html", questions: questions)
+    user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+    render(conn, "dashboard.html", questions: questions, user_stats: user_stats)
   end
 
   def login_user(conn, params) do
