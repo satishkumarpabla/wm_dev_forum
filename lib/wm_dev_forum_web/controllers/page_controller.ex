@@ -133,4 +133,21 @@ defmodule WmDevForumWeb.PageController do
     question = UserManagement.get_question_by_uuid(question_uuid)
     render(conn, "answers.html", answers: answers, question: question)
   end
+
+  def add_vote(
+        conn,
+        %{
+          "answer_uuid" => answer_uuid,
+          "vote_type" => vote_type,
+          "question_uuid" => question_uuid
+        } = _params
+      ) do
+    user_uuid = conn.assigns.user.uuid
+
+    UserManagement.add_vote(answer_uuid, user_uuid, vote_type)
+
+    answers = UserManagement.get_answers_by_question_uuid(question_uuid)
+    question = UserManagement.get_question_by_uuid(question_uuid)
+    render(conn, "answers.html", answers: answers, question: question)
+  end
 end

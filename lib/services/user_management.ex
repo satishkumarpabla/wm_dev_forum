@@ -73,4 +73,12 @@ defmodule WmDevForum.UserManagement do
   def mark_correct_answer(answer_uuid) do
     UserManagementQueries.update_answer(answer_uuid, %{is_correct: true})
   end
+
+  def add_vote(answer_uuid, user_uuid, "up" = _vote_type) do
+    UserManagementQueries.add_vote(%{answer_uuid: answer_uuid, user_uuid: user_uuid, up: true})
+  end
+
+  def add_vote(answer_uuid, user_uuid, "down" = _vote_type) do
+    UserManagementQueries.add_vote(%{answer_uuid: answer_uuid, user_uuid: user_uuid, down: true})
+  end
 end

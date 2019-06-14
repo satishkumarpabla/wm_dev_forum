@@ -67,6 +67,12 @@ defmodule WmDevForum.Repo.Migrations.CreateUser do
       add(:up, :boolean, default: false)
       add(:down, :boolean, default: false)
       add(:user_uuid, references(:users, column: :uuid, type: :binary_id, on_delete: :nilify_all))
+
+      add(
+        :answer_uuid,
+        references(:answers, column: :uuid, type: :binary_id, on_delete: :nilify_all)
+      )
+
       timestamps()
     end
   end
