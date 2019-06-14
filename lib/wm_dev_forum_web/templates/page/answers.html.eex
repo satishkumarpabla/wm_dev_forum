@@ -37,7 +37,16 @@
                       <%= answer.answer_text %>
                     </p>
                   </div>
-                  <p class="text-right green"><a href="#" class="btn btn-default btn-sm"> <span class="pngcorrect" ></span></a></p>
+                  <p class="text-right">
+                      <%=  if answer.is_correct do %>
+                        <img src="https://img.icons8.com/color/48/000000/double-tick.png" >
+                      <%= else %>
+                        <%= link to: page_path(@conn, :mark_correct_answer, answer.uuid ), class: "btn btn-default btn-sm", method: :post do %>
+                              <img src="https://img.icons8.com/color/48/000000/checkmark.png" />
+                        <%= end %>
+                      <%= end %>
+                  </p>
+
                 </div>
               </div>
             </div>

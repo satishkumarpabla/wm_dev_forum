@@ -110,4 +110,11 @@ defmodule WmDevForum.UserManagementQueries do
     })
     |> Repo.insert()
   end
+
+  def update_answer(answer_uuid, data) do
+    answer = Repo.get(Answer, answer_uuid)
+
+    Answer.update_changeset(answer, data)
+    |> Repo.update()
+  end
 end

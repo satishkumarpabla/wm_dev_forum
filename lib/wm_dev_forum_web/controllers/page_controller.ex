@@ -1,7 +1,7 @@
 defmodule WmDevForumWeb.PageController do
   use WmDevForumWeb, :controller
   alias WmDevForum.UserManagement
-  alias WmDevForum.Schema.User
+  alias WmDevForum.Schema.{User, Answer}
 
   def index(conn, _params) do
     render(conn, "index.html")
@@ -126,5 +126,15 @@ defmodule WmDevForumWeb.PageController do
     conn
     |> configure_session(drop: true)
     |> redirect(to: page_path(conn, :index))
+  end
+
+  def mark_correct_answer(
+        conn,
+        %{"answer_uuid" => answer_uuid} = _params
+      ) do
+    {:ok, %Answer{question_uuid: question_uuid}} = UserManagement.mark_correct_answer(answer_uuid)
+    answers = UserManagement.get_answers_by_question_uuid(question_uuid)
+    question = UserManagement.get_question_by_uuid(question_uuid)
+    render(conn, "answers.html", answers: answers, question: question)
   end
 end

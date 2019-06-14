@@ -58,4 +58,8 @@ defmodule WmDevForum.UserManagement do
   def add_answer(question_uuid, user_uuid, answer_text) do
     UserManagementQueries.add_answer(question_uuid, user_uuid, answer_text)
   end
+
+  def mark_correct_answer(answer_uuid) do
+    UserManagementQueries.update_answer(answer_uuid, %{is_correct: true})
+  end
 end

@@ -36,6 +36,7 @@ defmodule WmDevForumWeb.Router do
 
     get("/question/:question_uuid/answers", PageController, :get_answers)
     post("/add_answer", PageController, :add_answer)
+    post("/answer/:answer_uuid", PageController, :mark_correct_answer)
   end
 
   scope "/", WmDevForumWeb do
