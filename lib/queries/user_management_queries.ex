@@ -9,10 +9,10 @@ defmodule WmDevForum.UserManagementQueries do
     |> Repo.insert()
   end
 
-  def post_question(question) do
+  def post_question(question, description) do
     Question.create_changeset(%{
       title: question,
-      description: "this is that",
+      description: description,
       user_uuid: "763d9d88-ac8c-4213-8819-7b853d66c980"
     })
     |> Repo.insert()
