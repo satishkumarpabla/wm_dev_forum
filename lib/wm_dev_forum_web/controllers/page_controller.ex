@@ -121,4 +121,10 @@ defmodule WmDevForumWeb.PageController do
     question = UserManagement.get_question_by_uuid(Map.get(params, "question_uuid"))
     render(conn, "answers.html", answers: answers, question: question)
   end
+
+  def logout(conn, params) do
+    conn
+    |> configure_session(drop: true)
+    |> redirect(to: page_path(conn, :index))
+  end
 end
