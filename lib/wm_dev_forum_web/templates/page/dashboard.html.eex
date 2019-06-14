@@ -3,7 +3,7 @@
   <a href="/question">Add Question</a>
   <%=  for question <- @questions do %>
   <div>
-    <P><%=question.question_text%></P>
+    <P><a href=<%= "/question/"<>question.question_uuid <> "/answers" %> > <%=question.question_text%></a></P>
     <P><%=question.description%></p>
       <p><%=question.first_name<>" "<> question.last_name%></p>
   </div>

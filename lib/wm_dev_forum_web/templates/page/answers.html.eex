@@ -3,6 +3,10 @@
   <div>
   <%= label f, :question, "Question: " %>
   <span> <%= @question.title %> </span>
+  <br>
+  <%= label f, :description, "Description: " %>
+  <span> <%= @question.description %> </span>
+  <p>by: <%= @question.first_name <> " " <> @question.last_name %></p>
 </div>
 <div>
     <%= if @answers != [] do %>

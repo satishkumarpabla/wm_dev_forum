@@ -86,7 +86,20 @@ defmodule WmDevForum.UserManagementQueries do
   end
 
   def get_question_by_uuid(question_uuid) do
-    Repo.get(Question, question_uuid)
+    Repo.one(
+      from(q in Question,
+        inner_join: u in User,
+        on: q.user_uuid == u.uuid,
+        where: q.uuid == ^question_uuid,
+        select: %{
+          uuid: q.uuid,
+          title: q.title,
+          description: q.description,
+          first_name: u.first_name,
+          last_name: u.last_name
+        }
+      )
+    )
   end
 
   def add_answer(question_uuid, user_uuid, answer_text) do
