@@ -9,6 +9,22 @@ defmodule WmDevForum.UserManagementQueries do
     |> Repo.insert()
   end
 
+  def get_users_total_answers_by_user_uuid(user_uuid) do
+    Repo.all(
+      from(ans in Answer,
+        where: ans.user_uuid == ^user_uuid
+      )
+    )
+  end
+
+  def get_total_questions_posted_by_user(user_uuid) do
+    Repo.one(
+      from(que in Question,
+        select: count(que.user_uuid == ^user_uuid)
+      )
+    )
+  end
+
   def post_question(question, description, tag_value, loggedin_user_uuid) do
     {:ok, question} =
       Question.create_changeset(%{
@@ -66,10 +82,6 @@ defmodule WmDevForum.UserManagementQueries do
 
     User.update_changeset(user_data_from_database, %{is_accepted: true})
     |> Repo.update()
-  end
-
-  def delete_user(user_uuid) do
-    Repo.get!(User, user_uuid) |> Repo.delete()
   end
 
   def get_user_from_user_uuid(user_uuid) do
