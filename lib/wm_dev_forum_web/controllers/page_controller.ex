@@ -38,7 +38,11 @@ defmodule WmDevForumWeb.PageController do
     user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
 
     conn
-    |> render("dashboard.html", %{questions: questions, user_stats: user_stats})
+    |> render("dashboard.html", %{
+      questions: questions,
+      user_stats: user_stats,
+      my_questions: false
+    })
   end
 
   defp get_all_users(conn) do
@@ -93,6 +97,7 @@ defmodule WmDevForumWeb.PageController do
     UserManagement.post_question(params, loggedin_user)
     questions = UserManagement.get_questions()
     user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+    # redirect user to dashboard after adding question
 
     render(conn, "dashboard.html",
       questions: questions,
@@ -121,7 +126,7 @@ defmodule WmDevForumWeb.PageController do
           conn
           |> get_session(:user)
 
-        UserManagement.post_question(params, loggedin_user)
+        # UserManagement.post_question(params, loggedin_user)
         questions = UserManagement.get_questions()
         user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
 
