@@ -11,6 +11,25 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "register.html")
   end
 
+  def search_questions(conn, params) do
+    user_uuid = (conn.private.plug_session |> Map.get("user")).uuid
+
+    search_results =
+      UserManagement.get_search_results(params |> Map.get("search_tags"), user_uuid)
+      |> IO.inspect(label: "222222222222")
+
+    user_stats = get_user_stats(user_uuid)
+    questions = UserManagement.get_questions()
+
+    render(conn, "search-results-page.html", %{
+      questions: questions,
+      user_stats: user_stats,
+      search_results: search_results,
+      my_questions: false,
+      search_query: params |> Map.get("search_tags")
+    })
+  end
+
   def create_user(conn, params) do
     case UserManagement.create_user(params) do
       {:ok, _} ->
@@ -125,7 +144,7 @@ defmodule WmDevForumWeb.PageController do
         # has been commented because it was causing an issue at the time of login
         # UserManagement.post_question(params, loggedin_user)
         questions = UserManagement.get_questions()
-        user_stats = UserManagement.get_user_stats(user.uuid)
+        user_stats = get_user_stats(user.uuid)
 
         conn
         |> put_session(:user, user)
@@ -138,6 +157,10 @@ defmodule WmDevForumWeb.PageController do
       _ ->
         render(conn, "error-page.html")
     end
+  end
+
+  def get_user_stats(user_uuid) do
+    UserManagement.get_user_stats(user_uuid)
   end
 
   def approve_user(conn, params) do
