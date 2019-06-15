@@ -17,12 +17,13 @@
           <%= if @answers != [] do %>
           <%= for answer <- Enum.sort(@answers, &(&1.inserted_at <= &2.inserted_at)) do %>
           <!-- First Comment -->
+
           <article class="row">
             <div class="col-md-3 col-sm-3 hidden-xs">
               <figure class="thumbnail">
 
                  <%= answer.user.first_name %> <%= answer.user.last_name %>
-                 
+
               </figure>
             </div>
             <div class="col-md-9 col-sm-9">
@@ -75,11 +76,16 @@
     </div>
   </div>
   <div>
-    <label> Add new answer: </label>
-    <textarea name="answer" ></textarea>
+    <div class="form-group">
+
+    <label class="col-md-4 control-label"> Add new answer: </label>
+  <div class="col-md-8">
+    <textarea class="form-control" name="answer" ></textarea>
+  </div>
+</div>
     <input type="hidden"  name="question_uuid" value="<%= @question.uuid %>"></input>
   </div>
-  <button type="submit"> <%= gettext("Submit Answer") %></input>
+  <button class="btn btn-primary" type="submit"> <%= gettext("Submit Answer") %></button>
   <% end %>
 </div>
 
