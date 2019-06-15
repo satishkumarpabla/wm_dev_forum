@@ -16,14 +16,17 @@ defmodule WmDevForumWeb.PageController do
 
     search_results =
       UserManagement.get_search_results(params |> Map.get("search_tags"), user_uuid)
+      |> IO.inspect(label: "222222222222")
 
     user_stats = get_user_stats(user_uuid)
     questions = UserManagement.get_questions()
 
-    render(conn, "dashboard.html", %{
+    render(conn, "search-results-page.html", %{
       questions: questions,
       user_stats: user_stats,
-      search_results: search_results
+      search_results: search_results,
+      my_questions: false,
+      search_query: params |> Map.get("search_tags")
     })
   end
 

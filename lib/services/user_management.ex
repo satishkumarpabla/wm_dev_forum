@@ -10,6 +10,8 @@ defmodule WmDevForum.UserManagement do
     |> Enum.map(fn query_tag ->
       if query_tag.tag_title == tag do
         query_tag
+      else
+        query_tag.title
       end
     end)
   end
@@ -34,10 +36,12 @@ defmodule WmDevForum.UserManagement do
       end)
       |> Enum.concat()
       |> Enum.filter(fn question -> question != nil end)
+      |> IO.inspect(label: "111111111111111111111111111")
 
     tags_data_from_query =
       UserManagementQueries.get_question_tags()
       |> Enum.uniq()
+      |> IO.inspect(label: "333333333333333333333")
 
     filter_for_tags =
       search_tags
