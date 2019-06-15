@@ -122,14 +122,10 @@ defmodule WmDevForumWeb.PageController do
         |> get_all_users()
 
       %User{is_admin: false} ->
-        loggedin_user =
-          conn
-          |> get_session(:user)
-
         # has been commented because it was causing an issue at the time of login
         # UserManagement.post_question(params, loggedin_user)
         questions = UserManagement.get_questions()
-        user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
+        user_stats = UserManagement.get_user_stats(user.uuid)
 
         conn
         |> put_session(:user, user)
