@@ -121,7 +121,8 @@ defmodule WmDevForumWeb.PageController do
           conn
           |> get_session(:user)
 
-        UserManagement.post_question(params, loggedin_user)
+        # has been commented because it was causing an issue at the time of login
+        # UserManagement.post_question(params, loggedin_user)
         questions = UserManagement.get_questions()
         user_stats = UserManagement.get_user_stats(loggedin_user.uuid)
 
