@@ -53,10 +53,27 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 socket.connect()
 
+//UI stff here...
+
+let chatInput = $("#add-question");
+chatInput.click( function() {
+    channel.push("question-added",  {body:"question-added"});
+});
+
+
+
 // Now that you are connected, you can join channels with a topic:
-let channel = socket.channel("topic:subtopic", {})
+let channel = socket.channel("live_data:lobby", {})
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
   .receive("error", resp => { console.log("Unable to join", resp) })
 
 export default socket
+
+
+//Question added alert
+let questionShout = $("#question-added-msg");
+
+channel.on("question-added", payload => {
+  questionShout.append("New Question added")
+});
