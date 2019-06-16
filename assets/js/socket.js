@@ -75,5 +75,6 @@ export default socket
 let questionShout = $("#question-added-msg");
 
 channel.on("question-added", payload => {
-  questionShout.append("New Question added")
+   questionShout.show()
+  // questionShout.append("New Question added")
 });
