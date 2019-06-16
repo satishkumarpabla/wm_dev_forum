@@ -25,32 +25,44 @@ defmodule WmDevForum.UserManagement do
     end)
   end
 
-  def get_search_results(search_tags, user_uuid) do
-    questions = UserManagementQueries.get_search_results()
+  # def get_search_results(search_tags, user_uuid) do
+  #   questions = UserManagementQueries.get_search_results()
+  #
+  #   title_description_filter =
+  #     search_tags
+  #     |> String.split()
+  #     |> Enum.map(fn tag ->
+  #       get_filtered_results_on_title_description(questions, tag)
+  #     end)
+  #     |> Enum.concat()
+  #     |> Enum.filter(fn question -> question != nil end)
+  #     |> IO.inspect(label: "111111111111111111111111111")
+  #
+  #   tags_data_from_query =
+  #     UserManagementQueries.get_question_tags()
+  #     |> Enum.uniq()
+  #     |> IO.inspect(label: "333333333333333333333")
+  #
+  #   filter_for_tags =
+  #     search_tags
+  #     |> String.split()
+  #     |> Enum.map(fn tag ->
+  #       filter_tags_on_the_basis_of_tags(tag, tags_data_from_query)
+  #     end)
+  #     |> Enum.concat()
+  #     |> Enum.filter(fn question -> question != nil end)
+  # end
 
-    title_description_filter =
+
+  def get_search_results(search_tags, _user_uuid) do
       search_tags
       |> String.split()
       |> Enum.map(fn tag ->
-        get_filtered_results_on_title_description(questions, tag)
+        UserManagementQueries.get_question_uuids_by_search_tag(tag)
       end)
-      |> Enum.concat()
-      |> Enum.filter(fn question -> question != nil end)
-      |> IO.inspect(label: "111111111111111111111111111")
-
-    tags_data_from_query =
-      UserManagementQueries.get_question_tags()
+      |> List.flatten()
       |> Enum.uniq()
-      |> IO.inspect(label: "333333333333333333333")
-
-    filter_for_tags =
-      search_tags
-      |> String.split()
-      |> Enum.map(fn tag ->
-        filter_tags_on_the_basis_of_tags(tag, tags_data_from_query)
-      end)
-      |> Enum.concat()
-      |> Enum.filter(fn question -> question != nil end)
+      |> UserManagementQueries.get_questions_by_uuids()
   end
 
   def login_user(user_name, password) do

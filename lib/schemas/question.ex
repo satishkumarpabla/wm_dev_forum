@@ -19,7 +19,7 @@ defmodule WmDevForum.Schema.Question do
 
     many_to_many(:tags, Tag,
       join_through: "questions_tags",
-      join_keys: [question_uuid: :uuid, tags_uuid: :uuid],
+      join_keys: [question_uuid: :uuid, tag_uuid: :uuid],
       unique: true
     )
 
