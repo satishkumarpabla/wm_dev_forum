@@ -1,12 +1,13 @@
 <div class="container">
   <%= form_for @conn, page_path(@conn, :add_answer), [id: :signupform], fn(f)-> %>
+  <p class ="baseline	bottom"><a href=<%= "/back_from_answers_page/" <> @question.uuid %>> Back</a></p>
   <div>
   <%= label f, :question, "Question: " %>
   <span> <%= @question.title %> </span>
   <br>
   <%= label f, :description, "Description: " %>
   <span> <%= @question.description %> </span>
-  <p>by: <%= @question.first_name <> " " <> @question.last_name %></p>
+  <p><b> By: </b> <%= @question.first_name <> " " <> @question.last_name %></p>
 </div>
 
   <div class="row">
@@ -45,7 +46,7 @@
                   </div>
                   <p class="text-right">
                       <%=  if answer.is_correct do %>
-                        <img src="https://img.icons8.com/color/20/000000/double-tick.png" >
+                        <img src="https://img.icons8.com/color/20/000000/double-tick.png" , title="Marked as Correct">
                       <%= else %>
                       <!-- <div class="mark-correct" id= <%= answer.user.uuid %>  > -->
                         <%= link to: page_path(@conn, :mark_correct_answer, answer.uuid ), class: "btn btn-default btn-sm" ,id: "mark-correct" , method: :post, title: "Mark as correct answer" do %>
@@ -56,13 +57,13 @@
                       <!-- Up Vote -->
 
                       <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "up"), class: "btn btn-default btn-sm", method: :post do %>
-                            <img src="https://img.icons8.com/office/20/000000/up.png">
+                            <img src="https://img.icons8.com/office/20/000000/up.png", title="Given Up Vote">
                             <span><%=answer.up_votes%></span>
                       <%= end %>
 
                       <!-- down Vote -->
                       <%= link to: page_path(@conn, :add_vote, answer.question_uuid, answer.uuid, "down" ), class: "btn btn-default btn-sm", method: :post do %>
-                            <img src="https://img.icons8.com/office/20/000000/down.png">
+                            <img src="https://img.icons8.com/office/20/000000/down.png", title="Given Down Vote">
                             <span><%=answer.down_votes%></span>
 
                       <%= end %>

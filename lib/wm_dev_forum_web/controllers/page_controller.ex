@@ -7,6 +7,39 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "index.html")
   end
 
+  def back_from_search_page(conn, _params) do
+    questions = UserManagement.get_questions()
+    user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
+
+    render(conn, "dashboard.html", %{
+      my_questions: false,
+      questions: questions,
+      user_stats: user_stats
+    })
+  end
+
+  def back_from_add_question_page(conn, _params) do
+    questions = UserManagement.get_questions()
+    user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
+
+    render(conn, "dashboard.html", %{
+      my_questions: false,
+      questions: questions,
+      user_stats: user_stats
+    })
+  end
+
+  def back_from_answers_page(conn, params) do
+    questions = UserManagement.get_questions()
+    user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
+
+    render(conn, "dashboard.html", %{
+      my_questions: false,
+      questions: questions,
+      user_stats: user_stats
+    })
+  end
+
   def register(conn, _params) do
     render(conn, "register.html")
   end
@@ -17,7 +50,6 @@ defmodule WmDevForumWeb.PageController do
 
     search_results =
       UserManagement.get_search_results(params |> Map.get("search_tags"), user_uuid)
-      |> IO.inspect(label: "222222222222")
 
     user_stats = get_user_stats(user_uuid)
     questions = UserManagement.get_questions()

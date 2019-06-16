@@ -31,21 +31,25 @@ defmodule WmDevForum.UserManagementQueries do
 
   def get_question_uuids_by_search_tag(search_tag) do
     from(q in Question,
-    left_join: qtag in QuestionTag,
-    on: qtag.question_uuid == q.uuid,
-    left_join: tag in Tag,
-    on: tag.uuid == qtag.tag_uuid ,
-    where: fragment("? ilike ?", q.title , ^"%#{search_tag}%") or fragment("? ilike ?", q.description, ^"%#{search_tag}%")
-    or fragment("? ilike ?", tag.title, ^"%#{search_tag}%"),
-    select: q.uuid,
-    distinct: true)
+      left_join: qtag in QuestionTag,
+      on: qtag.question_uuid == q.uuid,
+      left_join: tag in Tag,
+      on: tag.uuid == qtag.tag_uuid,
+      where:
+        fragment("? ilike ?", q.title, ^"%#{search_tag}%") or
+          fragment("? ilike ?", q.description, ^"%#{search_tag}%") or
+          fragment("? ilike ?", tag.title, ^"%#{search_tag}%"),
+      select: q.uuid,
+      distinct: true
+    )
     |> Repo.all()
   end
 
   def get_questions_by_uuids(question_uuids) do
     from(q in Question,
-    where: q.uuid in ^question_uuids,
-    preload: [:tags])
+      where: q.uuid in ^question_uuids,
+      preload: [:tags]
+    )
     |> Repo.all()
   end
 
@@ -58,9 +62,13 @@ defmodule WmDevForum.UserManagementQueries do
   end
 
   def get_total_questions_posted_by_user(user_uuid) do
-    Repo.one(
+    Repo.all(
       from(que in Question,
-        select: count(que.user_uuid == ^user_uuid)
+        where: que.user_uuid == ^user_uuid,
+        select: %{
+          uuid: que.uuid,
+          title: que.title
+        }
       )
     )
   end

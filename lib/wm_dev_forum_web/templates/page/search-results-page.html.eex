@@ -1,4 +1,5 @@
 <div>
+  <p class ="baseline	bottom"><a href="/back_from_search_page"> Back</a></p>
   <h3> Showing results for "<%= @search_query %>".</h3>
 <section class="details-card">
     <div class="container">

@@ -36,12 +36,12 @@ defmodule WmDevForum.UserManagement do
   #     end)
   #     |> Enum.concat()
   #     |> Enum.filter(fn question -> question != nil end)
-  #     |> IO.inspect(label: "111111111111111111111111111")
+
   #
   #   tags_data_from_query =
   #     UserManagementQueries.get_question_tags()
   #     |> Enum.uniq()
-  #     |> IO.inspect(label: "333333333333333333333")
+  #
   #
   #   filter_for_tags =
   #     search_tags
@@ -53,16 +53,15 @@ defmodule WmDevForum.UserManagement do
   #     |> Enum.filter(fn question -> question != nil end)
   # end
 
-
   def get_search_results(search_tags, _user_uuid) do
-      search_tags
-      |> String.split()
-      |> Enum.map(fn tag ->
-        UserManagementQueries.get_question_uuids_by_search_tag(tag)
-      end)
-      |> List.flatten()
-      |> Enum.uniq()
-      |> UserManagementQueries.get_questions_by_uuids()
+    search_tags
+    |> String.split()
+    |> Enum.map(fn tag ->
+      UserManagementQueries.get_question_uuids_by_search_tag(tag)
+    end)
+    |> List.flatten()
+    |> Enum.uniq()
+    |> UserManagementQueries.get_questions_by_uuids()
   end
 
   def login_user(user_name, password) do
@@ -83,7 +82,9 @@ defmodule WmDevForum.UserManagement do
 
     # up_votes and down votes data to be fetched later once the respective functionalities are implemented
 
-    total_questions_posted = UserManagementQueries.get_total_questions_posted_by_user(user_uuid)
+    total_questions_posted =
+      UserManagementQueries.get_total_questions_posted_by_user(user_uuid)
+      |> Enum.count()
 
     %{
       number_of_correct_answers: number_of_correct_answers,

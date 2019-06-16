@@ -6,7 +6,7 @@
 </script>
 <%= form_for @conn, page_path(@conn, :search_questions), [id: :signupform], fn f-> %>
 <div class="input-group">
-  <label for="searchtags" class="text-info col-md-3">Search Tags:</label>
+  <label for="searchtags" class="text-info col-md-3">Search Questions:</label>
   <input type="text" name="search_tags" id="searchtags" class="form-control col-md-7">
   <div class="input-group-append">
     <button type="submit" > <%= gettext("Search") %></input>
