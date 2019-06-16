@@ -36,6 +36,7 @@ defmodule WmDevForumWeb.Router do
     get("/back_from_add_question_page", PageController, :back_from_add_question_page)
     get("/back_from_answers_page/:question_uuid", PageController, :back_from_answers_page)
     get("/back_from_login_page", PageController, :back_from_login_page)
+    get("/back_from_error_page", PageController, :back_from_error_page)
     get("/myquestions", PageController, :get_my_questions)
     get("/allquestions", PageController, :get_all_questions)
     get("/approve_user", PageController, :approve_user)

@@ -7,6 +7,10 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "index.html")
   end
 
+  def back_from_error_page(conn, _params) do
+    render(conn, "index.html")
+  end
+
   def back_from_login_page(conn, _params) do
     render(conn, "index.html")
   end
