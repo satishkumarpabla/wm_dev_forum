@@ -12,6 +12,7 @@ defmodule WmDevForumWeb.PageController do
   end
 
   def search_questions(conn, params) do
+    # TODO: get from conn.assigns
     user_uuid = (conn.private.plug_session |> Map.get("user")).uuid
 
     search_results =

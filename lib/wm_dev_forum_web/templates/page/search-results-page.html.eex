@@ -3,19 +3,19 @@
 <section class="details-card">
     <div class="container">
       <%= if @search_results == [] do %>
-        <h1> No questions relsted to "<%= @search_query %>"  were found :( </h1>
+        <h1> No questions related to "<%= @search_query %>"  were found :( </h1>
       <%= end  %>
         <div class="row">
           <%=  for question <- @search_results do %>
             <div class="col-md-4">
                 <div class="card-content">
                     <div class="card-img">
-                       <%=question.que.title%>
+                       <%=question.title%>
                     </div>
                     <div class="card-desc">
 
-                        <p><%=question.que.description%></p>
-                            <a href=<%= "/question/"<>question.que.uuid <> "/answers" %> class="btn-card">Answer</a>
+                        <p><%=question.description%></p>
+                            <a href=<%= "/question/"<>question.uuid <> "/answers" %> class="btn-card">Answer</a>
                     </div>
                 </div>
             </div>
@@ -23,4 +23,3 @@
         </div>
     </div>
 </section>
-</div>

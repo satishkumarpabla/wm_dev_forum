@@ -1,9 +1,9 @@
 <%= form_for @conn, page_path(@conn, :search_questions), [id: :signupform], fn f-> %>
 <div class="input-group">
-  <label for="searchtags" class="text-info">Search Tags:</label><br>
+  <label for="searchtags" class="text-info">Search:</label><br>
   <input type="text" name="search_tags" id="searchtags" class="form-control">
   <div class="input-group-append">
-    <button type="submit"> <%= gettext("S") %></input>
+    <button type="submit" class = "btn btn-success"> <%= gettext("Search") %></input>
   </div>
 </div>
 <% end %>
