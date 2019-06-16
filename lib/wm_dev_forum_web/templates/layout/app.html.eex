@@ -43,6 +43,7 @@
       <span tooltip="New Questions have been added." id="marked-correct">
         <div class="alert">
 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+<img height=35px width=35px src="/images/crown.gif"></img>
 <strong>configuration!</strong> One of your answers has been marked correct.
 </div>
       </span>

@@ -47,11 +47,11 @@
                       <%=  if answer.is_correct do %>
                         <img src="https://img.icons8.com/color/20/000000/double-tick.png" >
                       <%= else %>
-                      <div class="mark-correct" id= <%= answer.user.uuid %>  >
-                        <!-- <%= link to: page_path(@conn, :mark_correct_answer, answer.uuid ), class: "btn btn-default btn-sm" ,id: "mark-correct" , method: :post, title: "Mark as correct answer" do %> -->
-                              <img  src="https://img.icons8.com/color/20/000000/checkmark.png" />
-                        <!-- <%= end %> -->
-                      </div>
+                      <!-- <div class="mark-correct" id= <%= answer.user.uuid %>  > -->
+                        <%= link to: page_path(@conn, :mark_correct_answer, answer.uuid ), class: "btn btn-default btn-sm" ,id: "mark-correct" , method: :post, title: "Mark as correct answer" do %>
+                              <img  class="mark-correct" id= <%= answer.user.uuid %> src="https://img.icons8.com/color/20/000000/checkmark.png" />
+                        <%= end %>
+                      <!-- </div> -->
                       <%= end %>
                       <!-- Up Vote -->
 
