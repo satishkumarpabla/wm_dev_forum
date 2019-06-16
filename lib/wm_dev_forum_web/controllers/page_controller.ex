@@ -15,6 +15,17 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "index.html")
   end
 
+  def go_to_dashboard(conn, _params) do
+    questions = UserManagement.get_questions()
+    user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
+
+    render(conn, "dashboard.html", %{
+      my_questions: false,
+      questions: questions,
+      user_stats: user_stats
+    })
+  end
+
   def back_from_search_page(conn, _params) do
     questions = UserManagement.get_questions()
     user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
@@ -24,6 +35,11 @@ defmodule WmDevForumWeb.PageController do
       questions: questions,
       user_stats: user_stats
     })
+  end
+
+  def get_user_data_for_profile(conn, params) do
+    user_profile_data = UserManagement.get_user_profile_data(params |> Map.get("user_uuid"))
+    render(conn, "user_profile.html", user: user_profile_data)
   end
 
   def back_from_add_question_page(conn, _params) do

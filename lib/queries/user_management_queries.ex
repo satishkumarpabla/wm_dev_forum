@@ -9,6 +9,14 @@ defmodule WmDevForum.UserManagementQueries do
     |> Repo.insert()
   end
 
+  def get_user_profile_data(user_uuid) do
+    Repo.one(
+      from(user in User,
+        where: user.uuid == ^user_uuid
+      )
+    )
+  end
+
   def get_search_results() do
     Repo.all(from(que in Question))
   end
