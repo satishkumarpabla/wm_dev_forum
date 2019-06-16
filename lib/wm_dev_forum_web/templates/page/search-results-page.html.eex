@@ -14,7 +14,11 @@
                     </div>
                     <div class="card-desc">
 
+                      <%= if (String.length(question.description) > 40) do %>
+                        <p><%= String.slice(question.description, 1..40)%>...</p>
+                      <%= else %>
                         <p><%=question.description%></p>
+                      <% end %>
                             <a href=<%= "/question/"<>question.uuid <> "/answers" %> class="btn-card">Answer</a>
                     </div>
                 </div>
