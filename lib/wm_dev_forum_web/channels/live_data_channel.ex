@@ -28,6 +28,12 @@ defmodule WmDevForumWeb.LiveDataChannel do
     {:noreply, socket}
   end
 
+  # to brodcast the answer-marked-correct messages
+  def handle_in("answer-marked-correct", payload, socket) do
+    broadcast(socket, "answer-marked-correct", payload)
+    {:noreply, socket}
+  end
+
   # Add authorization logic here as required.
   defp authorized?(_payload) do
     true

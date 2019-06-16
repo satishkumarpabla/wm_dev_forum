@@ -15,6 +15,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script> $( document ).ready(function() {
    $("#question-added-msg").hide()
+   $("#marked-correct").hide()
     }); </script>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/answer.css") %>">
@@ -39,6 +40,13 @@
 </div>
       </span>
 
+      <span tooltip="New Questions have been added." id="marked-correct">
+        <div class="alert">
+<span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+<strong>configuration!</strong> One of your answers has been marked correct.
+</div>
+      </span>
+      <input type="hidden" id="usser_uuid" name="usser_uuid" value=""></input>
       <!-- <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p> -->
 

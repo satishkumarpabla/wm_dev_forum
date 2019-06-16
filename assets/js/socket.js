@@ -60,6 +60,12 @@ chatInput.click( function() {
     channel.push("question-added",  {body:"question-added"});
 });
 
+$(".mark-correct").click( function(){
+  var id = $(this).attr('id');
+  // alert(id);
+  channel.push("answer-marked-correct",  {body: id});
+});
+
 
 
 // Now that you are connected, you can join channels with a topic:
@@ -78,3 +84,15 @@ channel.on("question-added", payload => {
    questionShout.show()
   // questionShout.append("New Question added")
 });
+
+channel.on("answer-marked-correct", payload =>{
+  var idval=payload.body
+
+  var user_uuid =  $("#usser_uuid").val()
+  
+  if("'"+idval+"'" === user_uuid){
+  $("#marked-correct").show()
+}
+}
+
+);

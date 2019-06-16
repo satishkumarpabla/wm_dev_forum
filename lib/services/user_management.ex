@@ -76,7 +76,8 @@ defmodule WmDevForum.UserManagement do
     %{
       number_of_correct_answers: number_of_correct_answers,
       total_answers: total_answers,
-      total_questions_posted: total_questions_posted
+      total_questions_posted: total_questions_posted,
+      user_uuid: user_uuid
     }
   end
 
