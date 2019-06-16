@@ -7,6 +7,10 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "index.html")
   end
 
+  def back_from_login_page(conn, _params) do
+    render(conn, "index.html")
+  end
+
   def back_from_search_page(conn, _params) do
     questions = UserManagement.get_questions()
     user_stats = UserManagement.get_user_stats(conn.assigns.user.uuid)
