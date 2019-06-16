@@ -44,7 +44,7 @@
 <div class="form-group">
 <label class="col-md-3 control-label"></label>
   <div class="col-md-9">
-    <button id="singlebutton" type="submit"   name="singlebutton" class="btn btn-primary"> <%= gettext("Submit") %></button>
+    <button id="add-question" type="submit"   name="singlebutton" class="btn btn-primary"> <%= gettext("Submit") %></button>
   </div>
 </div>
 
