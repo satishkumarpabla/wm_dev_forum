@@ -1,6 +1,6 @@
 <div class="container">
   <%= form_for @conn, page_path(@conn, :add_answer), [id: :signupform], fn(f)-> %>
-  <p class ="baseline	bottom"><a href=<%= "/back_from_answers_page/" <> @question.uuid %>> Back</a></p>
+  <!-- <p class ="baseline	bottom"><a href=<%= "/back_from_answers_page/" <> @question.uuid %>> Back</a></p> -->
   <div>
   <%= label f, :question, "Question: " %>
   <span> <%= @question.title %> </span>

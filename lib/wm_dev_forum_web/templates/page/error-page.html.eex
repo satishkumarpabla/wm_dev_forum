@@ -1,4 +1,4 @@
 <div class="jumbotron">
-  <p class ="baseline	bottom"><a href="/back_from_error_page"> Go Back to Login Page</a></p>
+  <!-- <p class ="baseline	bottom"><a href="/back_from_error_page"> Go Back to Login Page</a></p> -->
   <p> You must have entered invalid credentials. Go back and enter correct credentials to login </p>
   </div>

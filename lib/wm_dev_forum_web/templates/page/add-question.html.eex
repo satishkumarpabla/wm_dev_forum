@@ -1,5 +1,5 @@
 <!-- <form class="form-horizontal"> -->
-<p class ="baseline	bottom"><a href="/back_from_add_question_page"> Back</a></p>
+<!-- <p class ="baseline	bottom"><a href="/back_from_add_question_page"> Back</a></p> -->
 <div class="form-horizontal">
 <%= form_for @conn, page_path(@conn, :add_question),  [id: :signupform], fn(f)-> %>
 <fieldset>
