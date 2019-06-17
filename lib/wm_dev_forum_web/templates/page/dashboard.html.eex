@@ -13,6 +13,7 @@
   </div>
 </div>
 <% end %>
+<p class ="baseline	bottom" align="right"><a href=<%= "/user_profile/" <> @user_stats.user_uuid %>> Profile</a></p>
 <div class="jumbotron">
   <h2 class = "text-top	text-bottom">Dashboard</h2>
   <div class="container">

@@ -16,6 +16,10 @@ defmodule WmDevForum.UserManagement do
     end)
   end
 
+  def get_user_profile_data(user_uuid) do
+    UserManagementQueries.get_user_profile_data(user_uuid)
+  end
+
   defp get_filtered_results_on_title_description(questions, tag) do
     questions
     |> Enum.map(fn question ->

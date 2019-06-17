@@ -1,0 +1,14 @@
+<body>
+<p class ="baseline	bottom" ><a href="/go_to_dashboard/"> Back </a></p>
+<h1 align="center"> <%= @user.first_name <> " " <> @user.last_name <> "'s" <> " " <> "Profile" %> </h1>
+  <div class="jumbotron">
+      <p class="font-weight-bold" align="left"> User Name: <%= @user.first_name <> " " <> @user.last_name %></p>
+      <p class="font-weight-bold" align="left"> Email: <%= @user.email  %> </p>
+      <p class="font-weight-bold" align="left"> Is Accepted: <%= @user.is_accepted  %> </p>
+      <p class="font-weight-bold" align="left"> Is Admin: <%= @user.is_admin  %> </p>
+      <p class="font-weight-bold" align="left"> Password: <%= @user.password  %> </p>
+  </div>
+
+
+
+</body>
