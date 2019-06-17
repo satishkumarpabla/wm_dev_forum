@@ -137,3 +137,6 @@ a.btn-card {
 .closebtn:hover {
   color: black;
 }
+.details-card.-search{
+  margin: -0px -20px;
+}

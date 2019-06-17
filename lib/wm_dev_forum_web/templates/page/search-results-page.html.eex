@@ -1,7 +1,7 @@
 <div>
   <!-- <p class ="baseline	bottom"><a href="/back_from_search_page"> Back</a></p> -->
   <h3> Showing results for "<%= @search_query %>".</h3>
-<section class="details-card">
+<section class="details-card -search">
     <div class="container">
       <%= if @search_results == [] do %>
         <h1> No questions related to "<%= @search_query %>"  were found :( </h1>

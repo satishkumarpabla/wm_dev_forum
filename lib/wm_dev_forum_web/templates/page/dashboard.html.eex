@@ -9,7 +9,7 @@
   <label for="searchtags" class="text-info col-md-3">Search Questions:</label>
   <input type="text" name="search_tags" id="searchtags" class="form-control col-md-7">
   <div class="input-group-append">
-    <button type="submit" > <%= gettext("Search") %></input>
+    <button type="submit" class="btn btn-success" > <%= gettext("Search") %></input>
   </div>
 </div>
 <% end %>
@@ -82,7 +82,7 @@
                     </div>
                     <div class="card-desc">
                         <%= if (String.length(question.description) > 40) do %>
-                          <p><%= String.slice(question.description, 1..40)%>...</p>
+                          <p><%= String.slice(question.description, 0..40)%>...</p>
                         <%= else %>
                           <p><%=question.description%></p>
                         <% end %>

@@ -28,7 +28,7 @@
   <label class="col-md-3 control-label" for="radios">Tag</label>
 
   <div class="col-md-9">
-    <%= select(f, :tag_value, Enum.map(@tags, &({&1.title, &1.uuid})), prompt: "Choose a tag", class: "radio") %>
+    <%= select(f, :tag_value, Enum.map(@tags, &({&1.title, &1.uuid})), prompt: "Choose a tag", class: "form-control") %>
 
     <!-- <%= for option <- @tags do %>
   <div class="radio">

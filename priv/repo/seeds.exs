@@ -140,6 +140,36 @@ tags = [
     title: "Elixir",
     inserted_at: DateTime.utc_now(),
     updated_at: DateTime.utc_now()
+  },
+  %{
+    uuid: UUID.uuid4(),
+    title: "Agile",
+    inserted_at: DateTime.utc_now(),
+    updated_at: DateTime.utc_now()
+  },
+  %{
+    uuid: UUID.uuid4(),
+    title: "C#",
+    inserted_at: DateTime.utc_now(),
+    updated_at: DateTime.utc_now()
+  },
+  %{
+    uuid: UUID.uuid4(),
+    title: "C",
+    inserted_at: DateTime.utc_now(),
+    updated_at: DateTime.utc_now()
+  },
+  %{
+    uuid: UUID.uuid4(),
+    title: "C++",
+    inserted_at: DateTime.utc_now(),
+    updated_at: DateTime.utc_now()
+  },
+  %{
+    uuid: UUID.uuid4(),
+    title: "AWS",
+    inserted_at: DateTime.utc_now(),
+    updated_at: DateTime.utc_now()
   }
 ]
 
@@ -148,25 +178,25 @@ Repo.insert_all(Tag, tags)
 user1 = users |> hd
 
 questions = [
+  # %{
+  #   uuid: UUID.uuid4(),
+  #   title: "Java-Angular",
+  #   description: "Java-Angular description",
+  #   user_uuid: user1.uuid,
+  #   inserted_at: DateTime.utc_now(),
+  #   updated_at: DateTime.utc_now()
+  # },
+  # %{
+  #   uuid: UUID.uuid4(),
+  #   title: "Elixir-Pheonix",
+  #   description: "Elixir-Pheonix description",
+  #   user_uuid: user1.uuid,
+  #   inserted_at: DateTime.utc_now(),
+  #   updated_at: DateTime.utc_now()
+  # },
   %{
     uuid: UUID.uuid4(),
-    title: "Java-Angular",
-    description: "Java-Angular description",
-    user_uuid: user1.uuid,
-    inserted_at: DateTime.utc_now(),
-    updated_at: DateTime.utc_now()
-  },
-  %{
-    uuid: UUID.uuid4(),
-    title: "Elixir-Pheonix",
-    description: "Elixir-Pheonix description",
-    user_uuid: user1.uuid,
-    inserted_at: DateTime.utc_now(),
-    updated_at: DateTime.utc_now()
-  },
-  %{
-    uuid: UUID.uuid4(),
-    title: "How do we move to router from Elm file ? ",
+    title: "How do we move to router from Elm file?",
     description:
       "I want to move the flow of control to router.ex from my Main.elm file. How am is supposed to do it ?",
     user_uuid: harry.uuid,
@@ -175,7 +205,7 @@ questions = [
   },
   %{
     uuid: UUID.uuid4(),
-    title: "Creating Query Filters in the Database and Display in html..",
+    title: "Creating Query Filters in the Database and Display in html",
     description:
       "I just created a template with lots of filter options. Now I need to make this template do a select directly in the database as the fields are filled. Can you help me ?",
     user_uuid: john.uuid,
@@ -184,16 +214,16 @@ questions = [
   },
   %{
     uuid: UUID.uuid4(),
-    title: "problem-in-paging-table-without-id",
+    title: "Problem in paging table without id",
     description:
-      "Sirs I’m trying to paginate, but I’m getting the following error.A small note: There is no id column in the database.Because this is an external query, I can not give mix ecto.create",
+      "I’m trying to paginate, but I’m getting the following error.A small note: There is no id column in the database.Because this is an external query, I can not give mix ecto.create",
     user_uuid: mandeep.uuid,
     inserted_at: DateTime.utc_now(),
     updated_at: DateTime.utc_now()
   },
   %{
     uuid: UUID.uuid4(),
-    title: "path-helper-removing-tags",
+    title: "path helper removing tags",
     description:
       "I am creating a tagging system where the user will be able to select a tag to list all entries with such tag(s). Its not working.",
     user_uuid: mandeep.uuid,
@@ -202,7 +232,7 @@ questions = [
   },
   %{
     uuid: UUID.uuid4(),
-    title: "problem-argument-error",
+    title: "problem argument error",
     description:
       "Gentlemen, I’m going through a problem. I’m not able to show the “phoenix” on the screen the values he finds. Below I will detail how my files are, with the error. What could it be?",
     user_uuid: rajesh.uuid,
@@ -214,6 +244,15 @@ questions = [
     title: "Websocket subprotocols with phoenix channels",
     description:
       "Hi everyone! I’m trying to use phoenix websockets as a Transport for SIP. For SIP implementation must use the websocket “sip” subprotocol. (Sec-WebSocket-Protocol: sip header for a handshake)",
+    user_uuid: ethan.uuid,
+    inserted_at: DateTime.utc_now(),
+    updated_at: DateTime.utc_now()
+  },
+  %{
+    uuid: UUID.uuid4(),
+    title: "How to use phoenix channels with example",
+    description:
+      "Hi everyone! I’m trying to use phoenix channels. It would be a great help if you can give me an example.",
     user_uuid: ethan.uuid,
     inserted_at: DateTime.utc_now(),
     updated_at: DateTime.utc_now()

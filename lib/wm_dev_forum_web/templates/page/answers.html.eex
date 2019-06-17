@@ -14,8 +14,9 @@
     <div class="col-md-12">
       <h2 class="page-header">Answers</h2>
 
-        <section class="comment-list">
+
           <%= if @answers != [] do %>
+          <section class="comment-list">
           <%= for answer <- Enum.sort(@answers, &(&1.inserted_at <= &2.inserted_at)) do %>
           <!-- First Comment -->
 
@@ -77,10 +78,11 @@
             </div>
           </article>
           <% end %>
+        </section>
           <% end %>
 
 
-        </section>
+      
     </div>
   </div>
   <div>
