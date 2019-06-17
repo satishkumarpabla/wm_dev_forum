@@ -26,9 +26,9 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <!-- <span tooltip="New Questions have been added." id="question-added-msg"><img src="/images/icon_Q.png" height="20px" width="20px"></span> -->
-
+            <%= if ( Map.get(@conn.assigns, :user) && Map.get(@conn.assigns, :user).uuid != nil) do %>
             <li><a href="<%= page_path(@conn, :logout) %>">Sign Out</a></li>
+            <%= end %>
           </ul>
         </nav>
         <a href="<%= page_path(@conn, :dashboard)%>"><span class="logo"></span></a>

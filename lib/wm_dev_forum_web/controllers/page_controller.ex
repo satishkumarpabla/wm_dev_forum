@@ -205,11 +205,7 @@ defmodule WmDevForumWeb.PageController do
 
         conn
         |> put_session(:user, user)
-        |> render("dashboard.html", %{
-          questions: questions,
-          user_stats: user_stats,
-          my_questions: false
-        })
+        |> redirect(to: page_path(conn, :dashboard))
 
       _ ->
         render(conn, "error-page.html")

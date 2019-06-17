@@ -178,22 +178,6 @@ Repo.insert_all(Tag, tags)
 user1 = users |> hd
 
 questions = [
-  # %{
-  #   uuid: UUID.uuid4(),
-  #   title: "Java-Angular",
-  #   description: "Java-Angular description",
-  #   user_uuid: user1.uuid,
-  #   inserted_at: DateTime.utc_now(),
-  #   updated_at: DateTime.utc_now()
-  # },
-  # %{
-  #   uuid: UUID.uuid4(),
-  #   title: "Elixir-Pheonix",
-  #   description: "Elixir-Pheonix description",
-  #   user_uuid: user1.uuid,
-  #   inserted_at: DateTime.utc_now(),
-  #   updated_at: DateTime.utc_now()
-  # },
   %{
     uuid: UUID.uuid4(),
     title: "How do we move to router from Elm file?",
@@ -322,7 +306,7 @@ questions = [
 
 Repo.insert_all(Question, questions)
 
-[q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, q15] = questions
+[q1, q2 | _] = questions
 [tag1, tag2, tag3 | _] = tags
 
 questions_tags = [
