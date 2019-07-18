@@ -5,31 +5,34 @@ defmodule WmDevForum.Schema.User do
   alias WmDevForum.Schema.User
   alias Comeonin.Bcrypt
 
-  @primary_key {:uuid, :binary_id, autogenerate: true}
+  @primary_key {:user_uuid, :binary_id, autogenerate: true}
 
-  schema "users" do
-    field(:first_name, :string)
-    field(:last_name, :string)
-    field(:email, :string)
+  schema "user_registration_details" do
+    field(:user_name, :string)
     field(:password, :string)
-    field(:is_admin, :boolean, default: false)
-    field(:is_accepted, :boolean, default: false)
+    field(:email, :string)
+    # field(:first_name, :string)
+    # field(:last_name, :string)
+    # field(:email, :string)
+    # field(:password, :string)
+    # field(:is_admin, :boolean, default: false)
+    # field(:is_accepted, :boolean, default: false)
 
     timestamps()
   end
 
   def create_changeset(attrs) do
     %User{}
-    |> cast(attrs, [:uuid, :first_name, :last_name, :email, :password, :is_admin, :is_accepted])
-    |> validate_required([:first_name, :last_name, :email, :password])
+    |> cast(attrs, [:user_uuid, :user_name, :email, :password])
+    |> validate_required([:user_name, :email, :password])
 
     # |> encrypt_password()
   end
 
   def update_changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:first_name, :last_name, :email, :password, :is_admin, :is_accepted])
-    |> validate_required([:first_name, :last_name, :email, :password])
+    |> cast(attrs, [:user_name, :email, :password])
+    |> validate_required([:user_name, :email, :password])
   end
 
   # defp encrypt_password(changeset) do

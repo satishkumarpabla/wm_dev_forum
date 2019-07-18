@@ -1,12 +1,21 @@
 defmodule WmDevForum.UserManagementQueries do
-  alias WmDevForum.Schema.{User, Question, Tag, QuestionTag, Answer, Vote}
+  alias WmDevForum.Schema.{User, Question, Tag, QuestionTag, Answer, Vote, Movies}
   alias WmDevForum.Repo
   import Ecto.Query
   alias Ecto.Multi
 
-  def create_user(params) do
-    User.create_changeset(params)
+  def create_user(user_map) do
+    User.create_changeset(user_map)
     |> Repo.insert()
+  end
+
+  def get_distinct_movies() do
+    Repo.all(
+      from(m in Movies,
+        distinct: m.genres,
+        select: m.genres
+      )
+    )
   end
 
   def get_user_profile_data(user_uuid) do
@@ -134,7 +143,7 @@ defmodule WmDevForum.UserManagementQueries do
   def check_if_user_is_authentic(user_name, password) do
     Repo.one(
       from(u in User,
-        where: u.email == ^user_name and u.password == ^password
+        where: u.user_name == ^user_name and u.password == ^password
       )
     )
   end

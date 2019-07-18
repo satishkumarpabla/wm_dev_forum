@@ -1,8 +1,8 @@
 defmodule WmDevForum.UserManagement do
   alias WmDevForum.UserManagementQueries
 
-  def create_user(params) do
-    UserManagementQueries.create_user(params)
+  def create_user(user_map) do
+    UserManagementQueries.create_user(user_map)
   end
 
   defp filter_tags_on_the_basis_of_tags(tag, tags_data_from_query) do
@@ -70,6 +70,7 @@ defmodule WmDevForum.UserManagement do
 
   def login_user(user_name, password) do
     UserManagementQueries.check_if_user_is_authentic(user_name, password)
+    |> IO.inspect(label: "USERNAME AND PASS RETURN")
   end
 
   def get_user_stats(user_uuid) do
@@ -162,5 +163,9 @@ defmodule WmDevForum.UserManagement do
 
   def add_vote(answer_uuid, user_uuid, "down" = _vote_type) do
     UserManagementQueries.add_vote(%{answer_uuid: answer_uuid, user_uuid: user_uuid, down: true})
+  end
+
+  def get_distinct_genres() do
+    UserManagementQueries.get_distinct_movies()
   end
 end

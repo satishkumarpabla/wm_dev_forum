@@ -68,44 +68,59 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "register.html")
   end
 
-  def search_questions(conn, params) do
-    # TODO: get from conn.assigns
-    user_uuid = (conn.private.plug_session |> Map.get("user")).uuid
+  def search_movies(conn, params) do
+    genres = UserManagement.get_distinct_genres()
 
-    search_results =
-      UserManagement.get_search_results(params |> Map.get("search_tags"), user_uuid)
-
-    user_stats = get_user_stats(user_uuid)
-    questions = UserManagement.get_questions()
-
-    render(conn, "search-results-page.html", %{
-      questions: questions,
-      user_stats: user_stats,
-      search_results: search_results,
-      my_questions: false,
-      search_query: params |> Map.get("search_tags")
-    })
+    IO.inspect(genres, label: "PARAMETERS")
+    # user_uuid = (conn.private.plug_session |> Map.get("user")).uuid
+    #
+    # search_results =
+    #   UserManagement.get_search_results(params |> Map.get("search_tags"), user_uuid)
+    #
+    # user_stats = get_user_stats(user_uuid)
+    # questions = UserManagement.get_questions()
+    #
+    # render(conn, "search-results-page.html", %{
+    #   questions: questions,
+    #   user_stats: user_stats,
+    #   search_results: search_results,
+    #   my_questions: false,
+    #   search_query: params |> Map.get("search_tags")
+    # })
+    render(conn, "movies-search-results.html", %{})
   end
 
   def create_user(conn, params) do
-    case UserManagement.create_user(params) do
-      {:ok, _} ->
-        conn
-        |> put_flash(:info, gettext("You have been registered!!!!"))
-        |> redirect(to: page_path(conn, :register))
+    user_map = %{
+      user_name: params |> Map.get("user_name"),
+      password: params |> Map.get("password"),
+      email: params |> Map.get("email"),
+      user_uuid: UUID.uuid4()
+    }
 
-      {:error, changeset} ->
-        errors =
-          changeset.errors
-          |> Enum.map(fn {key, {msg, _}} ->
-            {key, msg}
-          end)
+    UserManagement.create_user(user_map)
 
-        conn
-        |> put_flash(:error, gettext("Could not register!"))
-        |> Map.put(:errors, errors)
-        |> redirect(to: page_path(conn, :register))
-    end
+    conn
+    |> redirect(to: page_path(conn, :index))
+
+    # case UserManagement.create_user(params) do
+    #   {:ok, _} ->
+    #     conn
+    #     |> put_flash(:info, gettext("You have been registered!!!!"))
+    #     |> redirect(to: page_path(conn, :register))
+    #
+    #   {:error, changeset} ->
+    #     errors =
+    #       changeset.errors
+    #       |> Enum.map(fn {key, {msg, _}} ->
+    #         {key, msg}
+    #       end)
+    #
+    #     conn
+    #     |> put_flash(:error, gettext("Could not register!"))
+    #     |> Map.put(:errors, errors)
+    #     |> redirect(to: page_path(conn, :register))
+    # end
   end
 
   def dashboard(conn, _params) do
@@ -192,23 +207,12 @@ defmodule WmDevForumWeb.PageController do
       nil ->
         render(conn, "error-page.html")
 
-      %User{is_admin: true} ->
-        conn
-        |> put_session(:user, user)
-        |> get_all_users()
-
-      %User{is_admin: false} ->
-        # has been commented because it was causing an issue at the time of login
-        # UserManagement.post_question(params, loggedin_user)
-        questions = UserManagement.get_questions()
-        user_stats = get_user_stats(user.uuid)
-
         conn
         |> put_session(:user, user)
         |> redirect(to: page_path(conn, :dashboard))
 
       _ ->
-        render(conn, "error-page.html")
+        render(conn, "dashboard.html")
     end
   end
 
