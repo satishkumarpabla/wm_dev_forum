@@ -1,6 +1,25 @@
-<%= @available_genres = ["Comedy", "Horror"] %>
-
+<%= form_for @conn, page_path(@conn, :search_movies), [id: :signupform], fn f-> %>
+<div class="input-group">
+  <label for="searchtags" class="text-info col-md-3">Search Movies:</label>
+  <input type="text" name="search_tags" id="searchtags" class="form-control col-md-7" placeholder="Enter search text eg. title, genre, cast etc">
+  <div class="input-group-append">
+    <button type="submit" class="btn btn-success" > <%= gettext("Search") %></input>
+  </div>
+</div>
+<% end %>
 <div class="row">
-  <div class="col"> </div>
-  <div class="col"> page 2</div>
+  <div class="col">
+    <b> GENRES </b>
+    <br>
+    <%= for genre <- @available_genres do %>
+      <a href= <%= "/search_genre/"<> genre %>  > <%= genre %> </a>
+      <br>
+    <%= end %>
+   </div>
+  <div class="col">
+    <b> RESULTS  </b>
+    <%= for result <- @search_results do %>
+     <li> <%= result.title %> </li>
+     <%= end %>
+  </div>
 </div>

@@ -9,11 +9,29 @@ defmodule WmDevForum.UserManagementQueries do
     |> Repo.insert()
   end
 
+  def search_movies_title(updated_search_text) do
+    Repo.all(
+      from(m in Movies,
+        where: ilike(m.title, ^"%#{updated_search_text}%")
+        # where: String.contains?(^updated_search_text, m.title)
+      )
+    )
+  end
+
   def get_distinct_movies() do
     Repo.all(
       from(m in Movies,
         distinct: m.genres,
         select: m.genres
+      )
+    )
+  end
+
+  def search_for_genre(genre) do
+    Repo.all(
+      from(m in Movies,
+        where: ^genre in m.genres,
+        select: m
       )
     )
   end

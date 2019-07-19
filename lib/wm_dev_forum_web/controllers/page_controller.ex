@@ -2,6 +2,7 @@ defmodule WmDevForumWeb.PageController do
   use WmDevForumWeb, :controller
   alias WmDevForum.UserManagement
   alias WmDevForum.Schema.{User, Answer}
+  alias WmDevForum.UserManagementQueries
 
   def index(conn, _params) do
     render(conn, "index.html")
@@ -9,6 +10,16 @@ defmodule WmDevForumWeb.PageController do
 
   def back_from_error_page(conn, _params) do
     render(conn, "index.html")
+  end
+
+  def search_genre(conn, parameters) do
+    search_results =
+      UserManagement.search_for_genre(parameters |> Map.get("genre")) |> Enum.uniq()
+
+    render(conn, "dashboard.html", %{
+      available_genres: available_genres(),
+      search_results: search_results
+    })
   end
 
   def back_from_login_page(conn, _params) do
@@ -69,9 +80,17 @@ defmodule WmDevForumWeb.PageController do
   end
 
   def search_movies(conn, params) do
-    genres = UserManagement.get_distinct_genres()
+    updated_search_text =
+      params
+      |> Map.get("search_tags")
+      |> String.split(" ")
 
-    IO.inspect(genres, label: "PARAMETERS")
+    results =
+      updated_search_text
+      |> Enum.map(fn text ->
+        search_results = UserManagementQueries.search_movies_title(text)
+      end)
+
     # user_uuid = (conn.private.plug_session |> Map.get("user")).uuid
     #
     # search_results =
@@ -212,7 +231,7 @@ defmodule WmDevForumWeb.PageController do
         |> redirect(to: page_path(conn, :dashboard))
 
       _ ->
-        render(conn, "dashboard.html")
+        render(conn, "dashboard.html", available_genres: available_genres())
     end
   end
 
@@ -285,5 +304,9 @@ defmodule WmDevForumWeb.PageController do
 
     conn
     |> redirect(to: page_path(conn, :get_answers, question_uuid))
+  end
+
+  def available_genres() do
+    UserManagement.get_distinct_genres()
   end
 end

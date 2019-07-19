@@ -5,6 +5,10 @@ defmodule WmDevForum.UserManagement do
     UserManagementQueries.create_user(user_map)
   end
 
+  def search_for_genre(genre) do
+    UserManagementQueries.search_for_genre(genre)
+  end
+
   defp filter_tags_on_the_basis_of_tags(tag, tags_data_from_query) do
     tags_data_from_query
     |> Enum.map(fn query_tag ->
@@ -70,7 +74,6 @@ defmodule WmDevForum.UserManagement do
 
   def login_user(user_name, password) do
     UserManagementQueries.check_if_user_is_authentic(user_name, password)
-    |> IO.inspect(label: "USERNAME AND PASS RETURN")
   end
 
   def get_user_stats(user_uuid) do
@@ -167,5 +170,7 @@ defmodule WmDevForum.UserManagement do
 
   def get_distinct_genres() do
     UserManagementQueries.get_distinct_movies()
+    |> Enum.concat()
+    |> Enum.uniq()
   end
 end

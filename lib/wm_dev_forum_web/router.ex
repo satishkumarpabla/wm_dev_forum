@@ -60,6 +60,7 @@ defmodule WmDevForumWeb.Router do
     post("/search_movies", PageController, :search_movies)
     get("/user_profile/:user_uuid", PageController, :get_user_data_for_profile)
     get("/logout", PageController, :logout)
+    get("/search_genre/:genre", PageController, :search_genre)
     get("/registerations/new", PageController, :register)
     post("/registerations/create", PageController, :create_user)
 

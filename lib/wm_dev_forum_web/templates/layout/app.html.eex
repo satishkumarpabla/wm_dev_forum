@@ -31,7 +31,7 @@
             <%= end %>
           </ul>
         </nav>
-        <a href="<%= page_path(@conn, :dashboard)%>"><span class="logo"></span></a>
+        
       </header>
       <span tooltip="New Questions have been added." id="question-added-msg">
         <div class="alert">
