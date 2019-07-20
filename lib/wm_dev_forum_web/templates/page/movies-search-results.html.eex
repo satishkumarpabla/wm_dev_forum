@@ -1,0 +1,14 @@
+<%= for result <- @updated_search_results do %>
+
+<div class="card" style="width: 18rem;">
+ <!-- <img class="card-img-top" src="C:\freelance_website\wm_dev_forum\assets\static\images\movies_dummy_image.jpg" > -->
+ <div class="card-body">
+   <h3 class="card-title"> <%= result.title %> </h3>
+   <h4 class="card-title"> <%= result.genres %> </h4>
+   <p class="card-text"> <%= result.cast %></p>
+    <input type="button" value="View Details" onClick="window.location.href='<%= "/get_movie_content/"<> result.title %>'"
+ </div>
+</div>
+
+
+<% end %>

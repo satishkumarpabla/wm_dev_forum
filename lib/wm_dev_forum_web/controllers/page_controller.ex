@@ -12,6 +12,29 @@ defmodule WmDevForumWeb.PageController do
     render(conn, "index.html")
   end
 
+  def get_clicked_movie_details(conn, params) do
+    movie_id = params |> Map.get("movie_id")
+
+    movie_url = "https://www.imdb.com/title/" <> movie_id <> "/" <> "?ref_=fn_al_tt_4"
+
+    movie_details = UserManagement.get_clicked_movie_details(movie_url)
+
+    render(conn, "movie_details.html")
+  end
+
+  def get_movie_content(conn, parameters) do
+    search_results =
+      UserManagement.get_movie_content(parameters |> Map.get("movie_title"), [])
+      |> Enum.filter(fn result ->
+        result != nil
+      end)
+
+    render(conn, "search-results-page.html",
+      search_results: search_results,
+      search_query: parameters |> Map.get("movie_title")
+    )
+  end
+
   def search_genre(conn, parameters) do
     search_results =
       UserManagement.search_for_genre(parameters |> Map.get("genre")) |> Enum.uniq()
@@ -80,33 +103,19 @@ defmodule WmDevForumWeb.PageController do
   end
 
   def search_movies(conn, params) do
-    updated_search_text =
-      params
-      |> Map.get("search_tags")
-      |> String.split(" ")
+    search_text = params |> Map.get("search_tags")
 
-    results =
-      updated_search_text
-      |> Enum.map(fn text ->
-        search_results = UserManagementQueries.search_movies_title(text)
-      end)
+    results_for_title = UserManagementQueries.search_movies_title(search_text)
 
-    # user_uuid = (conn.private.plug_session |> Map.get("user")).uuid
-    #
-    # search_results =
-    #   UserManagement.get_search_results(params |> Map.get("search_tags"), user_uuid)
-    #
-    # user_stats = get_user_stats(user_uuid)
-    # questions = UserManagement.get_questions()
-    #
-    # render(conn, "search-results-page.html", %{
-    #   questions: questions,
-    #   user_stats: user_stats,
-    #   search_results: search_results,
-    #   my_questions: false,
-    #   search_query: params |> Map.get("search_tags")
-    # })
-    render(conn, "movies-search-results.html", %{})
+    results_for_genre = UserManagementQueries.search_on_the_basis_of_genre(search_text)
+
+    results_for_cast = UserManagementQueries.search_on_the_basis_of_cast(search_text)
+
+    updated_result =
+      (results_for_title ++ results_for_genre ++ results_for_cast)
+      |> Enum.uniq()
+
+    render(conn, "movies-search-results.html", updated_search_results: updated_result)
   end
 
   def create_user(conn, params) do
@@ -231,7 +240,7 @@ defmodule WmDevForumWeb.PageController do
         |> redirect(to: page_path(conn, :dashboard))
 
       _ ->
-        render(conn, "dashboard.html", available_genres: available_genres())
+        render(conn, "dashboard.html", available_genres: available_genres(), search_results: [])
     end
   end
 

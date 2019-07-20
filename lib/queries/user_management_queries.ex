@@ -13,7 +13,22 @@ defmodule WmDevForum.UserManagementQueries do
     Repo.all(
       from(m in Movies,
         where: ilike(m.title, ^"%#{updated_search_text}%")
-        # where: String.contains?(^updated_search_text, m.title)
+      )
+    )
+  end
+
+  def search_on_the_basis_of_genre(search_text) do
+    Repo.all(
+      from(m in Movies,
+        where: ^search_text in m.genres
+      )
+    )
+  end
+
+  def search_on_the_basis_of_cast(search_text) do
+    Repo.all(
+      from(m in Movies,
+        where: ^search_text in m.cast
       )
     )
   end

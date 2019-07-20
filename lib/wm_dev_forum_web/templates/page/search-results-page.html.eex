@@ -1,30 +1,16 @@
 <div>
-  <!-- <p class ="baseline	bottom"><a href="/back_from_search_page"> Back</a></p> -->
-  <h3> Showing results for "<%= @search_query %>".</h3>
-<section class="details-card -search">
-    <div class="container">
-      <%= if @search_results == [] do %>
-        <h1> No questions related to "<%= @search_query %>"  were found :( </h1>
-      <%= end  %>
-        <div class="row">
-          <%=  for question <- @search_results do %>
-            <div class="col-md-4">
-                <div class="card-content">
-                    <div class="card-img">
-                       <%=question.title%>
-                    </div>
-                    <div class="card-desc">
 
-                      <%= if (String.length(question.description) > 40) do %>
-                        <p><%= String.slice(question.description, 1..40)%>...</p>
-                      <%= else %>
-                        <p><%=question.description%></p>
-                      <% end %>
-                            <a href=<%= "/question/"<>question.uuid <> "/answers" %> class="btn-card">Answer</a>
-                    </div>
-                </div>
-            </div>
-          <%= end %>
-        </div>
-    </div>
-</section>
+  <h1> Showing results for "<%= @search_query %>"</h1>
+
+  <%= for result <- @search_results do %>
+
+    <li>
+       
+      <p> <%= result.movie_name %>   </p>
+      <!-- <a href= <%= "/get_clicked_movie_details/" <> result.movie_url %> > <%= result.movie_name %> </a> -->
+      <input type="button" value="View Details" onClick="window.location.href='<%= "/get_clicked_movie_details/"<> result.movie_id %>'"
+
+    </li>
+
+  <%= end %>
+</div>
