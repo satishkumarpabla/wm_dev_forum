@@ -17,8 +17,9 @@ defmodule WmDevForumWeb.PageController do
 
     movie_url = "https://www.imdb.com/title/" <> movie_id <> "/" <> "?ref_=fn_al_tt_4"
 
-    movie_details = UserManagement.get_clicked_movie_details(movie_url)
+    basic_details = UserManagement.get_basic_movie_details(movie_url)
 
+    extended_details = UserManagement.get_extended_details(movie_url)
     render(conn, "movie_details.html")
   end
 

@@ -5,8 +5,9 @@
  <div class="card-body">
    <h3 class="card-title"> <%= result.title %> </h3>
    <h4 class="card-title"> <%= result.genres %> </h4>
+
    <p class="card-text"> <%= result.cast %></p>
-    <input type="button" value="View Details" onClick="window.location.href='<%= "/get_movie_content/"<> result.title %>'"
+    <input type="button" value="View Details" onClick="window.location.href='<%= result.movie_uuid <> "/get_movie_content/"<> result.title  %>'"
  </div>
 </div>
 

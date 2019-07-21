@@ -5,11 +5,8 @@
   <%= for result <- @search_results do %>
 
     <li>
-       
       <p> <%= result.movie_name %>   </p>
-      <!-- <a href= <%= "/get_clicked_movie_details/" <> result.movie_url %> > <%= result.movie_name %> </a> -->
       <input type="button" value="View Details" onClick="window.location.href='<%= "/get_clicked_movie_details/"<> result.movie_id %>'"
-
     </li>
 
   <%= end %>

@@ -48,7 +48,9 @@ defmodule WmDevForum.Mixfile do
       {:ueberauth, "~> 0.3"},
       # google dependency added.
       {:ueberauth_google, "~> 0.7"},
-      {:elixir_uuid, "~> 1.2"}
+      {:elixir_uuid, "~> 1.2"},
+      {:floki, "~> 0.21.0"},
+      {:httpoison, "~> 1.4"}
     ]
   end
 

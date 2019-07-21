@@ -75,95 +75,111 @@ defmodule WmDevForum.UserManagement do
     end
   end
 
-  def get_clicked_movie_details(movie_url) do
-    cast = []
+  def get_basic_movie_details(movie_url) do
+    movie_cast = []
 
     case HTTPoison.get(movie_url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        details =
+        floki_response =
           body
           |> Floki.find(".credit_summary_item")
-          |> Enum.map(fn html_response ->
-            IO.inspect(html_response, label: "INLINE CLASS RESPONSE FETCHED")
 
-            contributor_title =
-              html_response
+        director_name = extract_directors_name(floki_response)
+
+        writer_name = extract_writers_name(floki_response)
+
+        cast =
+          floki_response
+          |> Enum.at(2)
+          |> elem(2)
+          |> Enum.map(fn resp ->
+            # THE FOLLOWING CONDITION IF CONDITION IS USED SO AS TO NOT ALLOW " ", " " OR STRINGS TO BE PRECISE TYPES OF VALUES TO GO INTO THE BELOW LOGIC IT MIGHT BE NEEDEED TO CHANGE
+            if !(resp |> String.valid?()) do
+              resp
               |> elem(2)
-              |> Enum.at(0)
-              |> elem(2)
-              |> Enum.at(0)
-              |> IO.inspect(label: "CONTRIBUTOR TITLE")
-
-            director_name =
-              if contributor_title == "Director:" do
-                get_name_from_html_structure(html_response)
-              else
-                ""
-              end
-
-            writer_name =
-              if contributor_title == "Writer:" do
-                get_name_from_html_structure(html_response)
-              else
-                ""
-              end
-
-            cast =
-              if contributor_title == "Stars:" do
-                IO.inspect(html_response, label: "HTML RESPONSE +_+++++++++")
-                # if html_response
-                html_response
-                |> elem(2)
-                |> IO.inspect(label: "HTML RESPONSE AFTER ELEM(2)")
-                |> Enum.map(fn resp ->
-                  # THE FOLLOWING CONDITION IF CONDITION IS USED SO AS TO NOT ALLOW " ", " " OR STRINGS TO BE PRECISE TYPES OF VALUES TO GO INTO THE BELOW LOGIC IT MIGHT BE NEEDEED TO CHANGE
-                  if !(resp |> String.valid?()) do
-                    IO.inspect(resp, label: "RESP S VALUE")
-
-                    resp
-                    |> elem(2)
-                    |> IO.inspect(label: "ABOUT TO GOT IN ENUM MAP")
-                    |> Enum.map(fn data ->
-                      IO.inspect(data, label: "INSIDE NESTED MAPS AND THIS IS DATA")
-                      cast |> Enum.concat([data])
-                    end)
-                  else
-                    [[""]]
-                  end
-
-                  # end
-                end)
-                |> Enum.concat()
-                |> Enum.concat()
-                |> List.delete_at(0)
-                |> List.delete(-1)
-                |> List.delete_at(-2)
-                # |> Enum.drop_while(fn string ->
-                #   string |> IO.inspect(label: " +++++++++++++++++++++++++++++++")
-                #
-                #   string == "Stars:" ||
-                #     string == "|" ||
-                #     string == "" ||
-                #     string = "See full cast & crew"
-                # end)
-                |> IO.inspect(label: "LETS SEE")
-
-                # |> Enum.filter(fn cast_name ->
-                #   cast_name != nil
-                # end)
-              else
-                ""
-              end
-
-            # html_response
-            # |> elem(2)
-            # |> Enum.at(1)
-            # |> elem(2)
+              |> Enum.map(fn data ->
+                movie_cast |> Enum.concat([data])
+              end)
+            else
+              [[""]]
+            end
           end)
+          |> Enum.concat()
+          |> Enum.concat()
+          |> List.delete("Stars:")
+          |> List.delete("See full cast & crew")
+          |> List.delete("|")
+          |> Enum.filter(fn name -> name != "" end)
+
+        %{
+          director_name: director_name,
+          writer_name: writer_name,
+          cast: cast
+        }
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.inspect(label: "UNABLE TO GET RESULT")
     end
+  end
+
+  def get_extended_details(movie_url) do
+    case HTTPoison.get(movie_url) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+        floki_response =
+          body
+          |> Floki.find(".txt-block")
+          |> IO.inspect(label: "FETCHED RESPONSE ")
+
+        parents_guide =
+          floki_response
+          |> Enum.at(0)
+          |> elem(2)
+          |> Enum.at(1)
+          |> elem(2)
+          |> Enum.at(0)
+          |> elem(2)
+          |> Enum.at(0)
+          |> IO.inspect(label: "PARENTS GUIDE")
+
+        language =
+          floki_response
+          |> Enum.at(1)
+          |> elem(2)
+          |> Enum.at(1)
+          |> elem(2)
+          |> Enum.at(0)
+          |> IO.inspect(label: "LANGUAGE")
+
+        release_date =
+          floki_response
+          |> Enum.at(3)
+          |> elem(2)
+          |> Enum.at(1)
+          |> String.trim()
+          |> IO.inspect(label: "RELEASE DATE")
+
+      # |> elem(2)
+      # |> Enum.at(1)
+      # |> elem(2)
+      # |> Enum.at(0)
+
+      # |> Enum.at()
+
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        IO.puts("UNABLE TO FETCH A SUCCESSFULL RESPONSE ")
+    end
+  end
+
+  defp extract_directors_name(floki_response) do
+    floki_response
+    |> Enum.at(0)
+    |> get_name_from_html_structure()
+  end
+
+  defp extract_writers_name(floki_response) do
+    floki_response
+    |> Enum.at(1)
+    |> get_name_from_html_structure()
   end
 
   def get_name_from_html_structure(response_tree_node) do

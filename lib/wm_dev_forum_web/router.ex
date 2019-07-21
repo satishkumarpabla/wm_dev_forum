@@ -63,7 +63,7 @@ defmodule WmDevForumWeb.Router do
     get("/search_genre/:genre", PageController, :search_genre)
     get("/registerations/new", PageController, :register)
     post("/registerations/create", PageController, :create_user)
-    get("/get_movie_content/:movie_title", PageController, :get_movie_content)
+    get("/:movie_uuid/get_movie_content/:movie_title", PageController, :get_movie_content)
 
     get(
       "/get_clicked_movie_details/:movie_id",
