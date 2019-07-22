@@ -83,10 +83,17 @@ defmodule WmDevForum.UserManagement do
         floki_response =
           body
           |> Floki.find(".credit_summary_item")
+          |> IO.inspect(label: "FLOKI RESPONSE FOR BASIC DETAILS  ")
 
-        director_name = extract_directors_name(floki_response)
+        length_of_response = floki_response |> Enum.count()
 
-        writer_name = extract_writers_name(floki_response)
+        # if length_of_response == 3 do
+        director_name =
+          extract_directors_name(floki_response)
+          |> IO.inspect(label: "DIRECTORS NAME FEGTCHED ")
+
+        writer_name =
+          extract_writers_name(floki_response) |> IO.inspect(label: "WRITERS NAME FETCHED")
 
         cast =
           floki_response
@@ -110,12 +117,19 @@ defmodule WmDevForum.UserManagement do
           |> List.delete("See full cast & crew")
           |> List.delete("|")
           |> Enum.filter(fn name -> name != "" end)
+          |> IO.inspect(label: "CAST FETCFHED ")
 
         %{
           director_name: director_name,
           writer_name: writer_name,
           cast: cast
         }
+
+        # else
+
+        # end
+
+        IO.inspect(floki_response |> Enum.count(), label: " NUMBER OF RESPONSE FETCHED BY FLOKI")
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.inspect(label: "UNABLE TO GET RESULT")
@@ -128,7 +142,8 @@ defmodule WmDevForum.UserManagement do
         floki_response =
           body
           |> Floki.find(".txt-block")
-          |> IO.inspect(label: "FETCHED RESPONSE ")
+
+        # |> IO.inspect(label: "FETCHED RESPONSE ")
 
         parents_guide =
           floki_response
@@ -139,7 +154,8 @@ defmodule WmDevForum.UserManagement do
           |> Enum.at(0)
           |> elem(2)
           |> Enum.at(0)
-          |> IO.inspect(label: "PARENTS GUIDE")
+
+        # |> IO.inspect(label: "PARENTS GUIDE")
 
         language =
           floki_response
@@ -148,7 +164,8 @@ defmodule WmDevForum.UserManagement do
           |> Enum.at(1)
           |> elem(2)
           |> Enum.at(0)
-          |> IO.inspect(label: "LANGUAGE")
+
+        # |> IO.inspect(label: "LANGUAGE")
 
         release_date =
           floki_response
@@ -156,14 +173,8 @@ defmodule WmDevForum.UserManagement do
           |> elem(2)
           |> Enum.at(1)
           |> String.trim()
-          |> IO.inspect(label: "RELEASE DATE")
 
-      # |> elem(2)
-      # |> Enum.at(1)
-      # |> elem(2)
-      # |> Enum.at(0)
-
-      # |> Enum.at()
+      # |> IO.inspect(label: "RELEASE DATE")
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.puts("UNABLE TO FETCH A SUCCESSFULL RESPONSE ")
@@ -171,24 +182,78 @@ defmodule WmDevForum.UserManagement do
   end
 
   defp extract_directors_name(floki_response) do
+    director_name = []
+
     floki_response
     |> Enum.at(0)
-    |> get_name_from_html_structure()
+    |> elem(2)
+    |> Enum.map(fn resp ->
+      # THE FOLLOWING CONDITION IF CONDITION IS USED SO AS TO NOT ALLOW " ", " " OR STRINGS TO BE PRECISE TYPES OF VALUES TO GO INTO THE BELOW LOGIC IT MIGHT BE NEEDEED TO CHANGE
+      if !(resp |> String.valid?()) do
+        resp
+        |> elem(2)
+        |> Enum.map(fn data ->
+          director_name |> Enum.concat([data])
+        end)
+      else
+        [[""]]
+      end
+    end)
+    |> Enum.concat()
+    |> Enum.concat()
+    |> List.delete("Stars:")
+    |> List.delete("See full cast & crew")
+    |> List.delete("|")
+    |> Enum.filter(fn name -> name != "" end)
   end
 
   defp extract_writers_name(floki_response) do
+    writer_name = []
+    IO.inspect(floki_response, label: " FLOKI RESPONSE FOR W NAME ")
+
     floki_response
     |> Enum.at(1)
-    |> get_name_from_html_structure()
+    |> elem(2)
+    |> Enum.map(fn resp ->
+      # THE FOLLOWING CONDITION IF CONDITION IS USED SO AS TO NOT ALLOW " ", " " OR STRINGS TO BE PRECISE TYPES OF VALUES TO GO INTO THE BELOW LOGIC IT MIGHT BE NEEDEED TO CHANGE
+      if !(resp |> String.valid?()) do
+        resp
+        |> elem(2)
+        |> Enum.map(fn data ->
+          writer_name |> Enum.concat([data])
+        end)
+      else
+        [[""]]
+      end
+    end)
+    |> Enum.concat()
+    |> Enum.concat()
+    |> List.delete("Stars:")
+    |> List.delete("See full cast & crew")
+    |> List.delete("|")
+    |> Enum.filter(fn name -> name != "" end)
+    |> IO.inspect(label: "LETS SEE ")
+
+    # floki_response
+    # |> Enum.at(1)
+    # |> get_name_from_html_structure()
   end
 
-  def get_name_from_html_structure(response_tree_node) do
-    response_tree_node
-    |> elem(2)
-    |> Enum.at(1)
-    |> elem(2)
-  end
-
+  # def get_name_from_html_structure(response_tree_node) do
+  #   director_name = []
+  #
+  #   response_tree_node
+  #   |> elem(2)
+  #   |> Enum.map(fn node ->
+  #     extracted_name = node |> elem(2) |> Enum.at(0)
+  #     # director_name |> Enum.concat(extracted_name)
+  #   end)
+  #
+  #   director_name
+  #   # |> Enum.at(1)
+  #   # |> elem(2)
+  # end
+  #
   defp filter_tags_on_the_basis_of_tags(tag, tags_data_from_query) do
     tags_data_from_query
     |> Enum.map(fn query_tag ->

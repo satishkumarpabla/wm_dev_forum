@@ -19,7 +19,7 @@ defmodule WmDevForumWeb.PageController do
 
     basic_details = UserManagement.get_basic_movie_details(movie_url)
 
-    extended_details = UserManagement.get_extended_details(movie_url)
+    # extended_details = UserManagement.get_extended_details(movie_url)
     render(conn, "movie_details.html")
   end
 
